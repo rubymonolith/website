@@ -22,15 +22,15 @@ Install the Ruby Monolith gem.
 gem install rubymonolith
 ```
 
-Then create a new Monolith project.
+Then create and launch new Monolith project.
 
 ```sh
 monolith new my-first-app
 cd my-first-app
-bin/rails server
+bin/dev
 ```
 
-This will create a Rails project, add Monolith to it, switch to the project directory, and boot the server. That's it! You're ready to go.
+This will create a Rails project, add Monolith to it, switch to the project directory, and boot the server. Just open the URL displayed on your console in the browser and it's off to the races!
 
 ### Existing Rails apps
 
