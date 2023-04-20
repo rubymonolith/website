@@ -14,6 +14,40 @@ Monolith is built on top of Rails and helps you *think more clearly about what y
 
 It's used by [Rocketship](https://rocketship.io) to build, ship, and deliver SaaS products to paying customers.
 
+## Getting started
+
+Install the Monlith Rubygem.
+
+```sh
+gem install rubymonolith
+```
+
+Then create a new Monolith project.
+
+```sh
+monolith new my-first-app
+cd my-first-app
+bin/rails server
+```
+
+This will create a Rails project, add Monolith to it, switch to the project directory, and boot the server. That's it! You're ready to go.
+
+### Existing Rails apps
+
+If you're adding Monolith to an existing Rails app, add the gem.
+
+```sh
+bundle add monolith
+```
+
+Then run the installer.
+
+```sh
+rails g monolith:install
+```
+
+That's it!
+
 ## How is it different than other SaaS toolkits?
 
 There's a ton of great SaaS toolkits out there like [Jumpstart](https://jumpstartrails.com) and [Bullet Train](https://bullettrain.co), both definitely worth checking out. Most SaaS frameworks focus on giving you a bunch of features all at once, which can make it harder to think clearly about what you want to build.
