@@ -106,8 +106,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    majesticmonolith (0.1.4)
-      thor (~> 1.0)
     marcel (1.0.2)
     markdown-rails (2.0.0.alpha8)
       rails (>= 6.0.0)
@@ -171,6 +169,8 @@ GEM
     reline (0.3.1)
       io-console (~> 0.5)
     rexml (3.2.5)
+    rubymonolith (0.1.5)
+      thor (~> 1.0)
     rubyzip (2.3.2)
     selenium-webdriver (4.6.1)
       childprocess (>= 0.5, < 5.0)
@@ -239,11 +239,11 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
-  majesticmonolith (~> 0.1.4)
   markdown-rails (= 2.0.0.alpha8)
   puma (~> 5.0)
   rails (~> 7.0.4)
   redis (~> 4.0)
+  rubymonolith (~> 0.1.5)
   selenium-webdriver
   sitepress-rails (~> 3.1)
   slim-rails (~> 3.5)

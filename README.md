@@ -1,13 +1,13 @@
 # MajesticMonolith.org Server
 
-The Rails application server for [MajesticMonolith.org](https://majesticmonolith.org/).
+The Rails application server for [MajesticMonolith.org](https://rubymonolith.com/).
 
 ## Getting Started
 
 This repo is a Rails application. To get it started run:
 
 ```sh
-$ git clone git@github.com:majesticmonolith/server.git ./monolith
+$ git clone git@github.com:rubymonolith/server.git ./monolith
 $ cd monolith
 $ bundle
 $ bin/dev

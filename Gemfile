@@ -78,6 +78,6 @@ gem "sitepress-rails", "~> 3.1"
 
 gem "markdown-rails", "= 2.0.0.alpha8"
 
-gem "majesticmonolith", "~> 0.1.4"
+gem "rubymonolith", "~> 0.1.5"
 
 gem "slim-rails", "~> 3.5"

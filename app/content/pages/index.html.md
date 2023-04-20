@@ -16,7 +16,7 @@ It's used by [Rocketship](https://rocketship.io) to build, ship, and deliver Saa
 
 ## Getting started
 
-Install the Monlith Rubygem.
+Install the Ruby Monolith gem.
 
 ```sh
 gem install rubymonolith
@@ -48,9 +48,9 @@ rails g monolith:install
 
 That's it!
 
-## How is it different than other SaaS toolkits?
+## How is it different than other SaaS tool-kits?
 
-There's a ton of great SaaS toolkits out there like [Jumpstart](https://jumpstartrails.com) and [Bullet Train](https://bullettrain.co), both definitely worth checking out. Most SaaS frameworks focus on giving you a bunch of features all at once, which can make it harder to think clearly about what you want to build.
+There's a ton of great SaaS tool-kits out there like [Jumpstart](https://jumpstartrails.com) and [Bullet Train](https://bullettrain.co), both definitely worth checking out. Most SaaS frameworks focus on giving you a bunch of features all at once, which can make it harder to think clearly about what you want to build.
 
 Monolith takes a different approach and gives you what you need when you need it. It guides you along the way in both technical, marketing, and promotional matters.
 
@@ -63,4 +63,4 @@ Monolith is a curated collection of libraries and methods that optimize for low 
 
 ## Source code
 
-Monolith source code is [available on Github](https://github.com/majesticmonolith)
+Monolith source code is [available on Github](https://github.com/rubymonolith)
