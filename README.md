@@ -1,4 +1,4 @@
-# MajesticMonolith.org Server
+# RubyMonolith.com Server
 
 The Rails application server for [MajesticMonolith.org](https://rubymonolith.com/).
 
