@@ -1,0 +1,17 @@
+<%= render_layout "application" do %>
+  <div class="container mx-auto flex flex-row gap-32 m-32">
+    <header class="container flex flex-col w-fit gap-12">
+      <nav class="flex flex-col gap-4">
+        <%= link_to "/", class: "mb-8" do %>
+          <%= image_tag "logo.svg", size: "96x181" %>
+        <% end %>
+        <a href="/features">Tour</a>
+        <a href="/docs">Docs</a>
+        <a href="https://github.com/orgs/rubymonolith/repositories">Source</a>
+      </nav>
+    </header>
+    <main class="mt-12">
+      <%= yield %>
+    </main>
+  </div>
+<% end %>

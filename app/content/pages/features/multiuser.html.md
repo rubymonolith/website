@@ -9,5 +9,4 @@ At first this seems like something that only business SaaS products should suppo
 
 For family/consumer apps, consider setting the limit for number of seats at 6, which should cover the size of most families. For additional users beyond that consider a support policy that either gives large families more seats (they need a break) or charge a modest fee.
 
-For business-to-business apps, consider per-seat licesning.
-
+For business-to-business apps, consider per-seat licensing.

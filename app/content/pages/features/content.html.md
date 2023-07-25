@@ -8,4 +8,3 @@ One of the most overlooked aspects of building Rails applications today is the c
 ## Recommended Approach
 
 Monolith recommends using [Sitepress](https://sitepress.cc) to create and manage content. Since it manages content as files in the `./app/content` directory of your Rails app, its really easy to create marketing, landinag pages, customer support, and terms of service content while keeping complexity and dependencies to a minimum.
-

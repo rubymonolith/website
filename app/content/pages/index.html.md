@@ -1,18 +1,11 @@
 ---
-title: Monolith
+title: Say hello to Monolith
 layout: article
 ---
 
-## What is Monolith?
+Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you a more productive builder and operator of web applications.
 
-Monolith is built on top of Rails and helps you *think more clearly about what you're building* by giving you the content, tools, and libraries you need to ship a product to the world. Instead of giving you All The Things™ at once, it lets you work in discrete phases guiding you along the way.
-
-1. **Idea** - Write the copy for your product and collect email addresses for launch time.
-2. **Prototype** - Quickly build a prototype of your application and start getting feedback. You'll get what you need to setup basic login functionality.
-3. **Launch** - Once you're happy with the prototype, its time to launch! Setup payment, install a terms of service, and more.
-3. **Scale** - If all goes well you'll have customers paying for your app and you'll need to add features or capacity.
-
-It's used by [Rocketship](https://rocketship.io) to build, ship, and deliver SaaS products to paying customers.
+It accomplishes this by giving you the content, tools, libraries, and best practices you need that are hand-picked by Rails engineers and who have experience operating SaaS businesses at scale over the past decade.
 
 ## Getting started
 
@@ -48,18 +41,15 @@ rails g monolith:install
 
 That's it!
 
-## How is it different than other SaaS tool-kits?
-
-There's a ton of great SaaS tool-kits out there like [Jumpstart](https://jumpstartrails.com) and [Bullet Train](https://bullettrain.co), both definitely worth checking out. Most SaaS frameworks focus on giving you a bunch of features all at once, which can make it harder to think clearly about what you want to build.
-
-Monolith takes a different approach and gives you what you need when you need it. It guides you along the way in both technical, marketing, and promotional matters.
-
-## What is it technically speaking?
+## Why monolith?
 
 Monolith is a curated collection of libraries and methods that optimize for low operational complexity. What does that mean exactly?
 
-1. **Minimize generated code** - Generated code is easy at first, but it can become hard to change as future requirements change.
+1. **Component-driven scaffolding** - Rails code generation is easy at first, but it can become hard to change as future requirements change. Monolith takes a "components first" approach to building UIs with object-oriented Phlex components. Instead of worrying about markup, templates, & partials, you can build powerful UI abstractions with components that will compound your efforts over time.
+
 2. **Low customer service requirements** - The people behind Monolith have experience opearting SaaS applications and know the areas that waste a lot of customer service time and energy like password resets, adding people to accounts, etc.
+
+3. **Best practices from the start** - Libraries like Devise make authentication seem as simple as entering a username and password, but as your application grows in complexity and requires sign-on from Google, Apple, or enterprises, you'll quickly find your default Devise setup needs to be rearchitected.
 
 ## Source code
 
