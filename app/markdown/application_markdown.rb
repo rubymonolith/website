@@ -7,7 +7,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   include Redcarpet::Render::SmartyPants
 
   # Uncomment and run `bundle add rouge` for syntax highlighting
-  # include MarkdownRails::Helper::Rouge
+  include MarkdownRails::Helper::Rouge
 
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
   # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
@@ -28,15 +28,15 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
     [:fenced_code_blocks]
   end
 
-  # These methods are called as the Markdown document is parsed. Block-level calls are
-  # documented at https://github.com/vmg/redcarpet#block-level-calls and span level calls
-  # are documented at https://github.com/vmg/redcarpet#block-level-calls so feel free to
-  # add more as you see fit.
-  def block_code(code, language)
-    content_tag :pre, class: language do
-      code # You could implement syntax highlighting here with Rouge.
-    end
-  end
+  # # These methods are called as the Markdown document is parsed. Block-level calls are
+  # # documented at https://github.com/vmg/redcarpet#block-level-calls and span level calls
+  # # are documented at https://github.com/vmg/redcarpet#block-level-calls so feel free to
+  # # add more as you see fit.
+  # def block_code(code, language)
+  #   content_tag :pre, class: language do
+  #     code # You could implement syntax highlighting here with Rouge.
+  #   end
+  # end
 
   # Example of how you might override the images to show embeds, like a YouTube video.
   def image(link, title, alt)

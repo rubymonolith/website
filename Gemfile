@@ -81,3 +81,7 @@ gem "markdown-rails", "= 2.0.0.alpha8"
 gem "rubymonolith", "~> 0.1.5"
 
 gem "slim-rails", "~> 3.5"
+
+gem "rouge", "~> 4.1"
+
+gem "dockerfile-rails", "~> 1.5"

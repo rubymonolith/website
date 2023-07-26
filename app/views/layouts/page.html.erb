@@ -1,13 +1,12 @@
 <%= render_layout "application" do %>
-  <div class="container mx-auto flex flex-row gap-32 m-32">
+  <div class="container mx-auto flex flex-col md:flex-row md:gap-32 md:m-32 p-6">
     <header class="container flex flex-col w-fit gap-12">
-      <nav class="flex flex-col gap-4">
+      <nav class="flex flex-col gap-4 md:sticky md:top-32">
         <%= link_to "/", class: "mb-8" do %>
           <%= image_tag "logo.svg", size: "96x181" %>
         <% end %>
-        <a href="/features">Tour</a>
-        <a href="/docs">Docs</a>
         <a href="https://github.com/orgs/rubymonolith/repositories">Source</a>
+        <a href="https://discord.com/channels/1077719467787825202/1077719468622479362">Discord</a>
       </nav>
     </header>
     <main class="mt-12">

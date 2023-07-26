@@ -1,5 +1,5 @@
 ---
-title: Super Forms
+title: Superform
 layout: article
 ---
 

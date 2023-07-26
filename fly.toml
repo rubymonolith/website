@@ -5,14 +5,6 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[build]
-  [build.args]
-    BUILD_COMMAND = "bin/rails fly:build"
-    SERVER_COMMAND = "bin/rails fly:server"
-
-[deploy]
-  release_command = "bin/rails fly:release"
-
 [env]
   PORT = "8080"
 
