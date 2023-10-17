@@ -26,4 +26,21 @@ module PageHelper
   def render_layout(layout, **kwargs, &block)
     render html: capture(&block), layout: "layouts/#{layout}", **kwargs
   end
+
+  # Given https://github.com/rubymonolith/superform, returns https://raw.githubusercontent.com/rubymonolith/superform/main/README.md
+  def github_readme_markdown(url)
+    github_url = URI(url)
+    github_url.build.tap do |url|
+      url.host("raw.githubusercontent.com")
+      url.path github_url.path, "main/README.md"
+    end
+  end
+
+  def render_github_readme_markdown(url)
+    url = github_readme_markdown(url)
+    content = Rails.cache.fetch "http_cache:#{url}", expires_in: 1.hour do
+      HTTP.get(url).body.to_s
+    end
+    render inline: content, type: :markdown, layout: false
+  end
 end

@@ -1,0 +1,5 @@
+<%= render_layout "page" do %>
+  <article class="prose">
+    <%= render_github_readme_markdown current_page.data.github_url %>
+  </article>
+<% end %>

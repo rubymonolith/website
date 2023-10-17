@@ -74,7 +74,7 @@ group :test do
   gem "webdrivers"
 end
 
-gem "sitepress-rails", "~> 3.1"
+gem "sitepress-rails", "~> 4.0"
 
 gem "markdown-rails", "= 2.0.0.alpha8"
 
@@ -85,3 +85,7 @@ gem "slim-rails", "~> 3.5"
 gem "rouge", "~> 4.1"
 
 gem "dockerfile-rails", "~> 1.5"
+
+gem "uri-builder", "~> 0.1.5"
+
+gem "http", "~> 5.1"

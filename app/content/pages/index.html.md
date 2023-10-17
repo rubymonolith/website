@@ -5,14 +5,37 @@ layout: article
 
 Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
 
-## Components all the way down
+It's currently a collection of libraries with the amibitions of becoming a full-blown framework that solves pain-points people feel when prototyping and shipping Rails applications.
+
+## It starts with copy, not code
+
+Before a single line of code is written for an application, you should write about it first. What is it? Why should people use it? How does it work?
+
+```markdown
+---
+title: Build ambitious Rails apps
+layout: article
+---
+
+Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
+
+...
+```
+
+Writing forces you to clarify your thinking of what's really important.
+
+## Ship it!
+
+Once the landing page is complete its time to ship it! Ruby Monolith recommends the `dockerfile-rails` generatore and Fly.io.
+
+## Components all the way down with Superview
 
 Here's what a typical controller looks like for a blog in Monolith. If you like how productive you feel building Sinatra applications, you'll love how this feels.
 
 ```ruby
 class PostsController < ApplicationController
   # This little DSL loads @posts from the logged in user.
-  resources :posts, from: :current_user
+  assign :posts, from: :current_user
 
   # Forms are concise, expressive, and highly customizable
   # Phlex components.
@@ -100,7 +123,9 @@ class PostsController < ApplicationController
 end
 ```
 
-## Superform: an absurdly customizable form builder that permits its own params
+[Learn more about Superview](/projects/superview)
+
+## Superform: an absurdly customizable form builder that permits its own parameters
 
 The adage is that if you want to build great web apps, you need to get really good at working with forms.
 
@@ -149,6 +174,8 @@ The best part? You don't have to jump around between templates, form builder obj
 
 Actually that's not the best part. **Superform doesn't need Strong Parameters**, which is one less thing you have to worry about when you're building your apps.
 
+[Learn more about Superform](/projects/superform)
+
 ## Built-in content management with the power of Jeckyll
 
 Remember the good 'ol days when building a website was as simple as editing a few HTML pages? Monolith brings that simplicity back by bundling Sitepress, a powerful file-backed content management system, in Rails.
@@ -169,11 +196,9 @@ As your app gets more sophisticated, so will your content needs. Add a support w
 
 Announce updates to your web app with a blog at `./app/content/pages/blog/*.html.md` and show this inside your app via `BlogPoagePage.all.sort_by(&:date).take(10)`.
 
-## The RESTful API-less API
+[Learn more about Sitepress](/projects/sitepress)
 
-Thinking about building a JSON or GraphQL API for your application? Don't. You don't need it.
-
-Instead, if you build your application with Superform and Restomatic, you'll get a pretty good API without all the overhead of maintaining an API.
+## REST easy
 
 Here's what your `config/routes.rb` looks like:
 
@@ -198,11 +223,24 @@ Rails.application.routes.draw do
 end
 ```
 
+Remember when REST in Rails was as easy as `link_to "Delete Post", method: :delete` before Hotwire arrived on scene? Don't get me wrong, Hotwire is awesome, but we lost something when UJS was put out to pasture.
+
+Restomatic includes route and view helpers that make REST fun again, so you can do this.
+
+```ruby
+create(Post.new)
+show(@post, :title)
+edit(@post, :title)
+delete(@post) { "Delete Post" }
+```
+
 ## Just say no to passwords
 
 Let's face it: passwords suck. The post-it notes your parents write them on and stick to their phones end up falling off, then they have to run through the password reset rigamrole.
 
 Monolith replaces passwords with email login links, sign-in with Google, Apple, and Microsoft. No, it doesn't use Passkeys because those will always be "just one year away".
+
+[Learn more about NoPassword](/projects/nopassword)
 
 ## Upgrade existing Rails apps to Monolith
 

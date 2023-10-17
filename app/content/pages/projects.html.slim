@@ -1,0 +1,11 @@
+---
+title: Projects
+layout: article
+---
+
+p Monolith is packed with features that will make you more productive and ship products faster to production.
+
+.grid.grid-columns-2.gap-8.not-prose
+  -site.glob("projects/**.html.*").each do |page|
+    = link_to page.request_path, class: "p-4 rounded border text-bold shadow hover:scale-105 transition" do
+      h2.font-bold.text-lg=page.data.title!
