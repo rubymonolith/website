@@ -26,7 +26,7 @@ Writing forces you to clarify your thinking of what's really important.
 
 ## Ship it!
 
-Once the landing page is complete its time to ship it! Ruby Monolith recommends the `dockerfile-rails` generatore and Fly.io.
+Once the landing page is complete its time to ship it! Ruby Monolith recommends the [`dockerfile-rails`](https://github.com/fly-apps/dockerfile-rails) generator and Fly.io.
 
 ## Components all the way down with Superview
 
@@ -176,7 +176,7 @@ Actually that's not the best part. **Superform doesn't need Strong Parameters**,
 
 [Learn more about Superform](/projects/superform)
 
-## Built-in content management with the power of Jeckyll
+## Built-in content management with the power of Jekyll
 
 Remember the good 'ol days when building a website was as simple as editing a few HTML pages? Monolith brings that simplicity back by bundling Sitepress, a powerful file-backed content management system, in Rails.
 
@@ -194,7 +194,7 @@ title: Welcome to Monolith
 
 As your app gets more sophisticated, so will your content needs. Add a support website by just putting Markdown files in `./app/content/pages/support/**/*.md.erb`, then access it from your Application with one-liners as simple as `SupportPage.find(tags: %w[login passwords])`
 
-Announce updates to your web app with a blog at `./app/content/pages/blog/*.html.md` and show this inside your app via `BlogPoagePage.all.sort_by(&:date).take(10)`.
+Announce updates to your web app with a blog at `./app/content/pages/blog/*.html.md` and show this inside your app via `BlogPage.all.sort_by(&:date).take(10)`.
 
 [Learn more about Sitepress](/projects/sitepress)
 
@@ -236,7 +236,7 @@ delete(@post) { "Delete Post" }
 
 ## Just say no to passwords
 
-Let's face it: passwords suck. The post-it notes your parents write them on and stick to their phones end up falling off, then they have to run through the password reset rigamrole.
+Let's face it: passwords suck. The post-it notes your parents write them on and stick to their phones end up falling off, then they have to run through the password reset rigmarole.
 
 Monolith replaces passwords with email login links, sign-in with Google, Apple, and Microsoft. No, it doesn't use Passkeys because those will always be "just one year away".
 
@@ -286,7 +286,7 @@ Monolith is a curated collection of libraries and methods that optimize for low 
 
 1. **Component-driven scaffolding** - Rails code generation is easy at first, but it can become hard to change as future requirements change. Monolith takes a "components first" approach to building UIs with object-oriented Phlex components. Instead of worrying about markup, templates, & partials, you can build powerful UI abstractions with components that will compound your efforts over time.
 
-2. **Low customer service requirements** - The people behind Monolith have experience opearting SaaS applications and know the areas that waste a lot of customer service time and energy like password resets, adding people to accounts, etc.
+2. **Low customer service requirements** - The people behind Monolith have experience operating SaaS applications and know the areas that waste a lot of customer service time and energy like password resets, adding people to accounts, etc.
 
 3. **Best practices from the start** - Libraries like Devise make authentication seem as simple as entering a username and password, but as your application grows in complexity and requires sign-on from Google, Apple, or enterprises, you'll quickly find your default Devise setup needs to be rearchitected.
 
