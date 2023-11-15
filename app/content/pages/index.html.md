@@ -5,9 +5,9 @@ layout: article
 
 Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
 
-It's currently a collection of libraries with the amibitions of becoming a full-blown framework that solves pain-points people feel when prototyping and shipping Rails applications.
+It's currently a collection of libraries with amibitions of becoming a full-blown framework that solves pain-points people feel when prototyping and shipping Rails applications.
 
-## It starts with copy, not code
+## A great app starts with copy, not code
 
 Before a single line of code is written for an application, you should write about it first. What is it? Why should people use it? How does it work?
 
@@ -22,13 +22,17 @@ Monolith is a fullstack application development framework built on top of Rails 
 ...
 ```
 
-Writing forces you to clarify your thinking of what's really important.
+Writing forces you to clarify your thinking of what's really important. It's also the easiest way for anybody to get started.
 
 ## Ship it!
 
-Once the landing page is complete its time to ship it! Ruby Monolith recommends the `dockerfile-rails` generatore and Fly.io.
+Once the landing page is complete its time to ship it! Ruby Monolith uses the `dockerfile-rails` gem to create a Dockerfile that can be deployed to any Docker-ready host, like [Fly.io](https://fly.io).
 
-## Components all the way down with Superview
+## Time for the database
+
+After you've shipped your copy and you're ready to start building your application, you add your database.
+
+## Quickly build application UI with Superview
 
 Here's what a typical controller looks like for a blog in Monolith. If you like how productive you feel building Sinatra applications, you'll love how this feels.
 
@@ -123,7 +127,7 @@ class PostsController < ApplicationController
 end
 ```
 
-[Learn more about Superview](/projects/superview)
+When you're satisified with the views, you can move them off to `./app/views/posts/index.rb`, `./app/views/posts/create.rb`, etc. and continue building your application.
 
 ## Superform: an absurdly customizable form builder that permits its own parameters
 
@@ -174,30 +178,6 @@ The best part? You don't have to jump around between templates, form builder obj
 
 Actually that's not the best part. **Superform doesn't need Strong Parameters**, which is one less thing you have to worry about when you're building your apps.
 
-[Learn more about Superform](/projects/superform)
-
-## Built-in content management with the power of Jeckyll
-
-Remember the good 'ol days when building a website was as simple as editing a few HTML pages? Monolith brings that simplicity back by bundling Sitepress, a powerful file-backed content management system, in Rails.
-
-When you spin up your first Monolith app, just edit `index.html` with whatever content you want.
-
-```md
----
-title: Welcome to Monolith
----
-
-<p>Monolith makes it easy to build ambitous websites.</p>
-
-<%= link_to new_user_path %>
-```
-
-As your app gets more sophisticated, so will your content needs. Add a support website by just putting Markdown files in `./app/content/pages/support/**/*.md.erb`, then access it from your Application with one-liners as simple as `SupportPage.find(tags: %w[login passwords])`
-
-Announce updates to your web app with a blog at `./app/content/pages/blog/*.html.md` and show this inside your app via `BlogPoagePage.all.sort_by(&:date).take(10)`.
-
-[Learn more about Sitepress](/projects/sitepress)
-
 ## REST easy
 
 Here's what your `config/routes.rb` looks like:
@@ -240,11 +220,11 @@ Let's face it: passwords suck. The post-it notes your parents write them on and 
 
 Monolith replaces passwords with email login links, sign-in with Google, Apple, and Microsoft. No, it doesn't use Passkeys because those will always be "just one year away".
 
-[Learn more about NoPassword](/projects/nopassword)
+And no, it's not OmniAuth. NoPassword implemented OAuth flows in Rails controllers which makes them easier to extend and plug into the `routes.rb` file.
 
 ## Upgrade existing Rails apps to Monolith
 
-All of Monolith
+Monolith is a curated collection of Rails plugins. If you have an existing Rails app, you can upgrade it incrementally, gem-by-gem, and work your way to the productivity of Monolith.
 
 ## Getting started
 
@@ -279,17 +259,3 @@ rails g monolith:install
 ```
 
 That's it!
-
-## Why monolith?
-
-Monolith is a curated collection of libraries and methods that optimize for low operational complexity. What does that mean exactly?
-
-1. **Component-driven scaffolding** - Rails code generation is easy at first, but it can become hard to change as future requirements change. Monolith takes a "components first" approach to building UIs with object-oriented Phlex components. Instead of worrying about markup, templates, & partials, you can build powerful UI abstractions with components that will compound your efforts over time.
-
-2. **Low customer service requirements** - The people behind Monolith have experience opearting SaaS applications and know the areas that waste a lot of customer service time and energy like password resets, adding people to accounts, etc.
-
-3. **Best practices from the start** - Libraries like Devise make authentication seem as simple as entering a username and password, but as your application grows in complexity and requires sign-on from Google, Apple, or enterprises, you'll quickly find your default Devise setup needs to be rearchitected.
-
-## Source code
-
-Monolith source code is [available on Github](https://github.com/rubymonolith)
