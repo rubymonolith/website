@@ -3,9 +3,9 @@ title: Build ambitious Rails apps
 layout: article
 ---
 
-Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
-
-It's currently a collection of libraries with amibitions of becoming a full-blown framework that solves pain-points people feel when prototyping and shipping Rails applications.
+<p class="text-xl">
+Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications including a component-first UI framework, a form builder that doesn't need Strong Parameters, a RESTful routing and view helper library, a file based content management system like Middleman, and integration with payment and third-party authorization systems.
+</p>
 
 ## A great app starts with copy, not code
 
