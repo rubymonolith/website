@@ -11,15 +11,21 @@ Monolith is a fullstack application development framework built on top of Rails 
 
 Before a single line of code is written for an application, you should write about it first. What is it? Why should people use it? How does it work?
 
-```markdown
----
-title: Build ambitious Rails apps
-layout: article
----
-
-Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
-
-...
+```ruby
+Article(
+  title: "Build ambitious Rails apps",
+){
+  Hero {
+    hgroup {
+      h1 { @title }
+      h2 { "A great app starts with copy, not code" }
+    }
+    a(href: "/", class: "btn btn-primary") { "Get started" }
+  }
+  Markdown %{
+    Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
+  }
+}
 ```
 
 Writing forces you to clarify your thinking of what's really important. It's also the easiest way for anybody to get started.
