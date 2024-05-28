@@ -24,6 +24,12 @@ Article(
   }
   Markdown %{
     Monolith is a fullstack application development framework built on top of Rails that comes bundled with everything you need that make you an even more productive builder and operator of web applications.
+
+    Here's what you'll love about it:
+
+    1. It's a component-first UI framework
+    2. Building apps is productive, fun, and easy
+    3. It's built on Phlex, meaning it's highly customizable
   }
 }
 ```
