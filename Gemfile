@@ -89,3 +89,7 @@ gem "dockerfile-rails", "~> 1.5"
 gem "uri-builder", "~> 0.1.5"
 
 gem "http", "~> 5.1"
+
+gem "phlex-rails", "~> 1.2"
+
+gem "rspec-rails", "~> 6.1"
