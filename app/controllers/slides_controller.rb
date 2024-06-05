@@ -144,6 +144,10 @@ class SlidesController < ApplicationController
   class PhlexPresentation < Presentation
     register_layouts Layouts
 
+    def slide(index)
+      slides.at(Integer(index))
+    end
+
     def slides
       [
         TitleSlide(
@@ -236,17 +240,74 @@ class SlidesController < ApplicationController
 
     def view_template
       ol(class: "grid grid-cols-1 gap-4 p-4 md:gap-12 md:p-12 max-w-screen-xl mx-auto") {
-        @presentation.slides.each do |slide|
-          li(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl") {
-            render slide
+        @presentation.slides.each.with_index do |slide, index|
+          li {
+            a(href: slide_path(index)) {
+              render SlideView.new(slide:)
+            }
           }
         end
       }
     end
   end
 
+  class SlideView < ApplicationView
+    def initialize(slide:)
+      @slide = slide
+    end
+
+    def view_template
+      div(
+        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
+      ){
+        render @slide
+      }
+    end
+
+    def index
+      Integer(helpers.request.params.fetch(:id, 0))
+    end
+  end
+
+  class SlidePlayerView < ApplicationView
+    class BlankSlide < Layouts::Slide
+      def template
+        h1 { "Blankity blank" }
+        a(href: slides_url) { "Go back to Slides" }
+      end
+    end
+
+    def initialize(presentation:, index:)
+      @index = Integer(index)
+      @presentation = presentation
+      @slide = @presentation.slide(index)
+    end
+
+    def view_template
+      if @slide
+        div(
+          class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
+          data: {
+            controller: "slide",
+            slide_next_value: slide_path(@index + 1),
+            slide_previous_value: slide_path(@index - 1)
+          },
+        ){
+          render @slide
+        }
+      else
+        render BlankSlide.new
+      end
+    end
+  end
+
+  before_action { @presentation = PhlexPresentation.new }
+
   def index
-    @presentation = PhlexPresentation.new
     render SlidesView.new(presentation: @presentation)
+  end
+
+  def show
+    render SlidePlayerView.new(presentation: @presentation, index: params.fetch(:id))
   end
 end
