@@ -1,5 +1,6 @@
 // app/javascript/controllers/slide_controller.js
 import { Controller } from "@hotwired/stimulus"
+import { Turbo } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
   static values = { next: String, previous: String }
@@ -23,13 +24,13 @@ export default class extends Controller {
 
   goToNextSlide() {
     if (this.nextValue) {
-      window.location.href = this.nextValue;
+      Turbo.visit(this.nextValue, { action: "replace" });
     }
   }
 
   goToPreviousSlide() {
     if (this.previousValue) {
-      window.location.href = this.previousValue;
+      Turbo.visit(this.previousValue, { action: "replace" });
     }
   }
 }
