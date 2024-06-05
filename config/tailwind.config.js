@@ -14,6 +14,9 @@ module.exports = {
       fontFamily: {
         sans: ['Helvetica Neue', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        'xs': '320px',
+      },
     },
   },
   plugins: [

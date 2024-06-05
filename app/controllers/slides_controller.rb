@@ -22,24 +22,6 @@ class SlidesController < ApplicationController
     style Name::Class,            class: "text-pink-400"
     style Name::Variable::Instance, class: "text-sky-300"
 
-    style Name::Decorator,        class: "text-blue-500"
-    style Name::Namespace,        class: "text-blue-400"
-    style Name::Attribute,        class: "text-blue-400"
-    style Name::Entity,           class: "text-blue-400"
-    style Name::Tag,              class: "text-blue-400"
-    style Name::Property,         class: "text-blue-400"
-    style Name::Attribute,        class: "text-blue-400"
-    style Name::Function,         class: "text-blue-400"
-
-    style Name::Variable::Global, class: "text-blue-400"
-
-    style Name::Variable::Class,  class: "text-blue-400"
-    style Name::Variable::Global, class: "text-blue-400"
-    style Name::Variable::Magic,  class: "text-blue-400"
-    style Name::Builtin::Pseudo,  class: "text-blue-400"
-    style Name::Builtin::Function, class: "text-blue-400"
-    style Name::Builtin::Variable, class: "text-blue-400"
-
     # Add more styles as needed
   end
 
@@ -60,7 +42,7 @@ class SlidesController < ApplicationController
       layouts.constants.each do |layout|
         define_method layout do |*args, **kwargs, &block|
           slide = Class.new(self.class.const_get(layout))
-          slide.define_method(:template, &block)
+          slide.define_method(:template, &block) if block
           slide.new(*args, **kwargs)
         end
       end
@@ -71,58 +53,78 @@ class SlidesController < ApplicationController
     class Slide < ApplicationView
       def initialize(title: nil, class: nil, &block)
         @title = title
-        @class = binding.local_variable_get(:class)
+        @class = kwarg(class:)
       end
 
       def around_template(&)
-        VStack(tokens("p-12 h-full", @class), &)
-      end
-
-      def Code(language, source)
-        pre(class: "bg-gray-800 text-white rounded-2xl p-4") {
-          code { format_code(source) }
-        }
-      end
-
-      def HStack(classes, &)
-        div(class: tokens("flex flex-row gap-8", classes), &)
-      end
-
-      def VStack(classes, &)
-        div(class: tokens("flex flex-col gap-8", classes), &)
-      end
-
-      def Title(&)
-        h1(class: "font-bold text-4xl", &)
-      end
-
-      def Subtitle(&)
-        h1(class: "text-4xl", &)
-      end
-
-      def Markdown(source)
-        div(class: "prose") do
-          render inline: source, type: :md
+        div class: "text-sm md:text-md h-full" do
+          VStack(class: tokens("p-4 md:p-12 h-full", @class), &)
         end
       end
 
-      private
-        def format_code(source)
+      def Code(language, class: nil, **, &source)
+        pre(class: tokens("text-[0.7rem] md:text-md bg-gray-800 text-white rounded-2xl p-2 md:p-4", class:)) {
+          code { format_code(language:, source: source.call) }
+        }
+      end
+
+      def HStack(class: nil, &)
+        div(class: tokens("flex flex-row gap-2 md:gap-8", class:), &)
+      end
+
+      def VStack(class: nil, &)
+        div(class: tokens("flex flex-col gap-2 md:gap-8", class:), &)
+      end
+
+      def Title(&)
+        h1(class: "font-bold text-md xs:text-lg sm:text-3xl md:text-5xl lg:text-6xl xl:text-8xl leading-tight sm:leading-normal", &)
+      end
+
+      def Subtitle(&)
+        h1(class: "text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-6xl", &)
+      end
+
+      def Markdown(class: "prose-sm md:prose", &source)
+        div(class:) do
+          render inline: source.call, type: :md
+        end
+      end
+
+      protected
+        def kwarg(class:)
+          binding.local_variable_get(:class)
+        end
+
+        def tokens(*, class: nil, **, &)
+          super(kwarg(class:), *, **, &)
+        end
+
+        def format_code(language:, source:)
           formatter = RougeTailwindHTMLFormatter.new(RougeTailwindTheme.new)
-          lexer = Rouge::Lexers::Ruby.new
+          lexer = Rouge::Lexer.find(language.to_s)
           highlighted_code = formatter.format(lexer.lex(source))
           unsafe_raw highlighted_code
         end
     end
 
     class TitleSlide < Slide
-      def Title(&)
-        h1(class: "font-bold text-8xl", &)
+      def initialize(*, subtitle: nil, **, &)
+        super(*, **, &)
+        @subtitle = subtitle
+      end
+
+      # def Title(&)
+      #   h1(class: "font-bold text-lg md:text-3xl xl:text-4xl", &)
+      # end
+
+      def template
+        Title { @title } if @title
+        Subtitle { @subtitle } if @subtitle
       end
 
       def around_template
         super do
-          VStack "place-content-center h-full" do
+          VStack class: "place-content-center h-full" do
             yield
           end
         end
@@ -146,29 +148,62 @@ class SlidesController < ApplicationController
       [
         TitleSlide(
           title: "Build Rails Applications with 100% Phlex 💪",
-          class: "bg-blue-500 text-white"
+          subtitle: "A new way of thinking about the front-end in Rails",
+          class: "bg-blue-700 text-white"
+        ),
+
+        ContentSlide(
+          title: "⚠️ WARNING ⚠️",
         ){
-          Title { @title }
-          Subtitle { "Phlex is a new way to build Rails applications." }
+          Markdown {
+            <<~MARKDOWN
+            * First look at Phlex and the thought is usually, "that's a terrible idea"
+            * It's like Tailwind; you gotta try it.
+            * After you try it, half of you will love it and the other half of you will still hate it.
+            MARKDOWN
+          }
         },
 
         ContentSlide(
-          title: "What is Phlex?"
+          title: "What does Phlex look like?"
         ){
-          p { "Phlex is a plain 'ol Ruby object" }
-          p { "It's a new way to build Rails applications. Here's what it looks like:" }
-          Code :ruby, <<~RUBY
-            class MyComponent < Phlex::HTML
-              def initialize(name:)
-                @name = name
-              end
+          p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
+          HStack {
+            Code(:ruby){
+              <<~RUBY
+                class Nav < Phlex::HTML
+                  def template
+                    nav(class: "main-nav") {
+                      ul {
+                        li { a(href: "/") { "Home" } }
+                        li { a(href: "/about") { "About" } }
+                        li { a(href: "/contact") { "Contact" } }
+                      }
+                    }
+                  end
+                end
+              RUBY
+            }
 
-              def view_template
-                p { "Hello! #{@name}"}
-              end
-            end
-          RUBY
+            Code(:html){
+              <<~HTML
+                <nav class="main-nav">
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                  </ul>
+                </nav>
+              HTML
+            }
+          }
         },
+
+        TitleSlide(
+          title: "Actually no... sorry, I got sidetracked building tools",
+          subtitle: "Let's talk about that instead",
+          class: "text-lg bg-neutral-800 text-neutral-200"
+        ),
 
         ContentSlide(
           title: "Why Phlex?"
@@ -179,12 +214,17 @@ class SlidesController < ApplicationController
         },
 
         ContentSlide(title: "Why Phlex?"){
-          Markdown <<~MARKDOWN
-
-          * Because its fun
-          * Because its super-de-dooper
-          MARKDOWN
+          Markdown(class: "prose prose-neutral-100"){
+            <<~MARKDOWN
+            * **,ecause its fun
+            * Because its super-de-dooper
+            MARKDOWN
+          }
         },
+
+        ContentSlide(title: "Here's what this presentation looks like"){
+          Code(:ruby, class: "overflow-scroll"){ File.read(__FILE__) }
+        }
       ]
     end
   end
@@ -195,7 +235,7 @@ class SlidesController < ApplicationController
     end
 
     def view_template
-      ol(class: "grid grid-cols-1 gap-12 p-12 max-w-screen-xl mx-auto") {
+      ol(class: "grid grid-cols-1 gap-4 p-4 md:gap-12 md:p-12 max-w-screen-xl mx-auto") {
         @presentation.slides.each do |slide|
           li(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl") {
             render slide
