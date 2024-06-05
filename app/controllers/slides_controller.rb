@@ -47,6 +47,12 @@ class SlidesController < ApplicationController
         end
       end
     end
+
+    def slide(index)
+      id = Integer(index)
+      return nil if id.negative?
+      slides.at(id)
+    end
   end
 
   module Layouts
@@ -143,10 +149,6 @@ class SlidesController < ApplicationController
 
   class PhlexPresentation < Presentation
     register_layouts Layouts
-
-    def slide(index)
-      slides.at(Integer(index))
-    end
 
     def slides
       [
@@ -257,15 +259,9 @@ class SlidesController < ApplicationController
     end
 
     def view_template
-      div(
-        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
-      ){
+      div(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl"){
         render @slide
       }
-    end
-
-    def index
-      Integer(helpers.request.params.fetch(:id, 0))
     end
   end
 
@@ -286,7 +282,9 @@ class SlidesController < ApplicationController
     end
 
     def slide_url(offset=0)
-      @slide ? slide_path(@index + offset) : nil
+      index = @index + offset
+      # @presentation.slide(index) ? slide_path(index) : nil
+      slide_path(index)
     end
 
     def view_template
