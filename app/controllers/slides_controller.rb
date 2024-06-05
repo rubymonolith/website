@@ -272,8 +272,10 @@ class SlidesController < ApplicationController
   class SlidePlayerView < ApplicationView
     class BlankSlide < Layouts::Slide
       def template
-        h1 { "Blankity blank" }
-        a(href: slides_url) { "Go back to Slides" }
+        VStack {
+          h1 { "End of presentation" }
+          a(href: slides_url, class: "underline") { "Go back to Slides" }
+        }
       end
     end
 
@@ -283,21 +285,21 @@ class SlidesController < ApplicationController
       @slide = @presentation.slide(index)
     end
 
+    def slide_url(offset=0)
+      @slide ? slide_path(@index + offset) : nil
+    end
+
     def view_template
-      if @slide
-        div(
-          class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
-          data: {
-            controller: "slide",
-            slide_next_value: slide_path(@index + 1),
-            slide_previous_value: slide_path(@index - 1)
-          },
-        ){
-          render @slide
-        }
-      else
-        render BlankSlide.new
-      end
+      div(
+        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
+        data: {
+          controller: "slide",
+          slide_next_value: slide_url(+1),
+          slide_previous_value: slide_url(-1)
+        },
+      ){
+        render @slide || BlankSlide.new
+      }
     end
   end
 
