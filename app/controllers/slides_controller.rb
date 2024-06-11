@@ -49,7 +49,7 @@ class SlidesController < ApplicationController
       end
 
       def Code(language, class: nil, **, &source)
-        pre(class: tokens("text-[0.7rem] md:text-md bg-gray-800 text-white rounded-2xl p-2 md:p-4", class:)) {
+        pre(class: tokens("text-[0.7rem] md:text-md lg:text-lg xl:text-xl bg-gray-800 text-white rounded-2xl p-2 md:p-4", class:)) {
           code { format_code(language:, source: source.call) }
         }
       end
@@ -62,15 +62,15 @@ class SlidesController < ApplicationController
         div(class: tokens("flex flex-col gap-2 md:gap-8", class:), &)
       end
 
-      def Title(&)
-        h1(class: "font-bold text-md xs:text-lg sm:text-3xl md:text-5xl lg:text-6xl xl:text-8xl leading-tight sm:leading-normal", &)
+      def Title(class: nil, **, &)
+        h1(class: tokens("font-bold text-md xs:text-lg sm:text-3xl md:text-5xl lg:text-6xl leading-tight sm:leading-normal", class:), **, &)
       end
 
       def Subtitle(&)
         h1(class: "text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-6xl", &)
       end
 
-      def Markdown(class: "prose-sm md:prose", &source)
+      def Markdown(class: "prose-sm sm:prose-md md:prose-xl lg:prose-2xl", &source)
         div(class:) do
           render inline: source.call, type: :md
         end
@@ -99,9 +99,9 @@ class SlidesController < ApplicationController
         @subtitle = subtitle
       end
 
-      # def Title(&)
-      #   h1(class: "font-bold text-lg md:text-3xl xl:text-4xl", &)
-      # end
+      def Title(**,&)
+        super(class: "xl:text-8xl", **, &)
+      end
 
       def template
         Title { @title } if @title

@@ -11,7 +11,7 @@ class Slides::PhlexSlidesController < SlidesController
         ContentSlide(
           title: "⚠️ WARNING ⚠️",
         ){
-          Markdown(class: "prose-lg") {
+          Markdown {
             <<~MARKDOWN
             * What works for me might not work best for you.
             * First look at Phlex and the thought is usually, "that's a terrible idea"
@@ -23,7 +23,7 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "What is Phlex?",
-          subtitle: "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output"
+          subtitle: "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output."
         ),
 
         ContentSlide(
@@ -128,18 +128,101 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Why Phlex?"
+          title: "And then there's Kits 🤩"
         ){
-          Markdown(class: "prose prose-neutral-100"){
+          p { "Class functions will automatically initialize and render your components" }
+          Code(:ruby) {
+            <<~RUBY
+              class Page < ApplicationComponent
+                def template
+                  Sidebar {
+                    Header { "My Site" }
+                    Nav do |nav|
+                      nav.item("/") { "Home" }
+                      nav.item("/about") { "About" }
+                      nav.item("/contact") { "Contact" }
+                    end
+                  }
+                end
+              end
+            RUBY
+          }
+        },
+
+        ContentSlide(
+          title: "Take advantage of Ruby for your templates"
+        ){
+          Markdown {
             <<~MARKDOWN
-            * It's fun!
+            * Use `include` and `extend` in your views.
+            * Enforce data types with Ruby's type checking and method signatures.
+            MARKDOWN
+          }
+        },
+
+        TitleSlide(
+          title: "Phlex makes possible an ambitious future of libraries that plug into each other..."
+        ),
+
+        ContentSlide(
+          title: "Superview"
+        ){
+          Markdown {
+            <<~MARKDOWN
+            * Embed Phlex views right into controllers.
+            * Sinatra like ergonomics for Rails.
+            MARKDOWN
+          }
+        },
+
+        ContentSlide(
+          title: "Superform"
+        ){
+          Markdown {
+            <<~MARKDOWN
+            * Build forms with Phlex components.
+            * The best form helper that you can use with Rails.
+            * You can actually customize it.
+            * You don't need strong parameters 🤩.
+            MARKDOWN
+          }
+        },
+
+        ContentSlide(
+          title: "Phlex UI & more..."
+        ){
+          Markdown {
+            <<~MARKDOWN
+            Entire UI toolkits are being built for Phlex like
+            * phlexui
+            * ZestUI
             * ...
             MARKDOWN
           }
         },
 
-        ContentSlide(title: "Here's what this presentation looks like"){
+        TitleSlide(
+          title: "What are some websites built with Phlex running in production?"
+        ),
+
+        TitleSlide(
+          title: "TinyZap⚡️",
+        ),
+
+        TitleSlide(
+          title: "Thingybase"
+        ),
+
+        TitleSlide(
+          title: "What are some Phlex projects I can look at?"
+        ),
+
+        ContentSlide(title: "This presentation was built with Phlex 🤣"){
           Code(:ruby, class: "overflow-scroll"){ File.read(__FILE__) }
+        },
+
+        ContentSlide(title: "Blog demo"){
+          Code(:ruby, class: "overflow-scroll"){ "def hi; puts 'hi'; end;" }
         }
       ]
     end
