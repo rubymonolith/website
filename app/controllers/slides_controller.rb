@@ -147,6 +147,72 @@ class SlidesController < ApplicationController
     end
   end
 
+  class SlidesView < ApplicationView
+    def initialize(presentation:)
+      @presentation = presentation
+    end
+
+    def view_template
+      ol(class: "grid grid-cols-1 gap-4 p-4 md:gap-12 md:p-12 max-w-screen-xl mx-auto") {
+        @presentation.slides.each.with_index do |slide, index|
+          li {
+            a(href: slide_path(index)) {
+              render SlideView.new(slide:)
+            }
+          }
+        end
+      }
+    end
+  end
+
+  class SlideView < ApplicationView
+    def initialize(slide:)
+      @slide = slide
+    end
+
+    def view_template
+      div(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl"){
+        render @slide
+      }
+    end
+  end
+
+  class SlidePlayerView < ApplicationView
+    class BlankSlide < Layouts::Slide
+      def template
+        VStack {
+          h1 { "End of presentation" }
+          a(href: slides_url, class: "underline") { "Go back to Slides" }
+        }
+      end
+    end
+
+    def initialize(presentation:, index:)
+      @index = Integer(index)
+      @presentation = presentation
+      @slide = @presentation.slide(index)
+    end
+
+    def slide_url(offset=0)
+      index = @index + offset
+      # @presentation.slide(index) ? slide_path(index) : nil
+      slide_path(index)
+    end
+
+    def view_template
+      div(
+        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
+        data: {
+          controller: "slide",
+          slide_next_value: slide_url(+1),
+          slide_previous_value: slide_url(-1)
+        },
+      ){
+        render @slide || BlankSlide.new
+      }
+    end
+  end
+
   class PhlexPresentation < Presentation
     register_layouts Layouts
 
@@ -232,72 +298,6 @@ class SlidesController < ApplicationController
           Code(:ruby, class: "overflow-scroll"){ File.read(__FILE__) }
         }
       ]
-    end
-  end
-
-  class SlidesView < ApplicationView
-    def initialize(presentation:)
-      @presentation = presentation
-    end
-
-    def view_template
-      ol(class: "grid grid-cols-1 gap-4 p-4 md:gap-12 md:p-12 max-w-screen-xl mx-auto") {
-        @presentation.slides.each.with_index do |slide, index|
-          li {
-            a(href: slide_path(index)) {
-              render SlideView.new(slide:)
-            }
-          }
-        end
-      }
-    end
-  end
-
-  class SlideView < ApplicationView
-    def initialize(slide:)
-      @slide = slide
-    end
-
-    def view_template
-      div(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl"){
-        render @slide
-      }
-    end
-  end
-
-  class SlidePlayerView < ApplicationView
-    class BlankSlide < Layouts::Slide
-      def template
-        VStack {
-          h1 { "End of presentation" }
-          a(href: slides_url, class: "underline") { "Go back to Slides" }
-        }
-      end
-    end
-
-    def initialize(presentation:, index:)
-      @index = Integer(index)
-      @presentation = presentation
-      @slide = @presentation.slide(index)
-    end
-
-    def slide_url(offset=0)
-      index = @index + offset
-      # @presentation.slide(index) ? slide_path(index) : nil
-      slide_path(index)
-    end
-
-    def view_template
-      div(
-        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
-        data: {
-          controller: "slide",
-          slide_next_value: slide_url(+1),
-          slide_previous_value: slide_url(-1)
-        },
-      ){
-        render @slide || BlankSlide.new
-      }
     end
   end
 
