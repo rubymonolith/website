@@ -210,7 +210,7 @@ class SlidesController < ApplicationController
           data: {
             controller: "slide",
             slide_next_value: slide_url(+1),
-            slide_previous_value: slide_url(-1)
+            slide_previous_value: slide_url(-1),
           },
         ){
           render @slide || BlankSlide.new

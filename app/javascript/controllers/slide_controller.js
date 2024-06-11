@@ -15,10 +15,16 @@ export default class extends Controller {
   }
 
   handleKeydown(event) {
-    if (event.key === "ArrowRight") {
-      this.goToNextSlide();
-    } else if (event.key === "ArrowLeft") {
-      this.goToPreviousSlide();
+    switch (event.key) {
+      case "ArrowRight":
+        this.goToNextSlide();
+        break;
+      case "ArrowLeft":
+        this.goToPreviousSlide();
+        break;
+      case "Escape":
+        this.exitSlides();
+        break;
     }
   }
 
@@ -32,5 +38,9 @@ export default class extends Controller {
     if (this.previousValue) {
       Turbo.visit(this.previousValue, { action: "replace" });
     }
+  }
+
+  exitSlides() {
+    history.back()
   }
 }

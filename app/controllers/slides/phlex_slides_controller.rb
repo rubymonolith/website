@@ -21,8 +21,13 @@ class Slides::PhlexSlidesController < SlidesController
           }
         },
 
+        TitleSlide(
+          title: "What is Phlex?",
+          subtitle: "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output"
+        ),
+
         ContentSlide(
-          title: "What is Phlex?"
+          title: "What does Phlex look like?"
         ){
           p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
           HStack {
@@ -57,24 +62,78 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         TitleSlide(
-          title: "Actually no... sorry, I got sidetracked building tools",
-          subtitle: "Let's talk about that instead",
-          class: "text-lg bg-neutral-800 text-neutral-200"
+          title: "That looks awfully verbose! 😅"
         ),
+
+        ContentSlide(
+          title: "Make up for verbosity with abstractions."
+        ){
+          p { "The Navigation Menu was refactored such that the dev doesn't need to worry about the item implementation" }
+          HStack {
+            Code(:ruby) {
+              <<~RUBY
+                class Nav < Phlex::HTML
+                  def template(&content)
+                    nav(class: "main-nav") {
+                      ul(&content)
+                    }
+                  end
+
+                  def item(url, &content)
+                    li { a(href: url, &content) }
+                  end
+                end
+              RUBY
+            }
+
+            Code(:ruby){
+              <<~RUBY
+                render Nav.new do |nav|
+                  nav.item("/") { "Home" }
+                  nav.item("/about") { "About" }
+                  nav.item("/contact") { "Contact" }
+                end
+              RUBY
+            }
+          }
+        },
+
+        ContentSlide(
+          title: "Extend Nav to create a Tailwind navigation"
+        ){
+          p { "Useful if you're shipping a component library or prototyping new features" }
+          VStack {
+            Code(:ruby) {
+              <<~RUBY
+                class TailwindNav < Nav
+                  def template(&content) = nav(class: "flex flex-row gap-4", &content)
+
+                  def item(url, &content)
+                    a(href: url, class: "text-underline", &content)
+                  end
+                end
+              RUBY
+            }
+
+            Code(:html){
+              <<~HTML
+                <nav class="flex flex-row gap-4">
+                  <a href="/" class="text-underline">Home</a>
+                  <a href="/about" class="text-underline">About</a>
+                  <a href="/contact" class="text-underline">Contact</a>
+                </nav>
+              HTML
+            }
+          }
+        },
 
         ContentSlide(
           title: "Why Phlex?"
         ){
-          p { "Build EVERYTHING in Ruby" }
-          p { "Simpler API than ViewComponents" }
-          p { "Localize view state" }
-        },
-
-        ContentSlide(title: "Why Phlex?"){
           Markdown(class: "prose prose-neutral-100"){
             <<~MARKDOWN
-            * **,ecause its fun
-            * Because its super-de-dooper
+            * It's fun!
+            * ...
             MARKDOWN
           }
         },
