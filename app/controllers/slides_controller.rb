@@ -200,16 +200,18 @@ class SlidesController < ApplicationController
     end
 
     def view_template
-      div(
-        class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl",
-        data: {
-          controller: "slide",
-          slide_next_value: slide_url(+1),
-          slide_previous_value: slide_url(-1)
-        },
-      ){
-        render @slide || BlankSlide.new
-      }
+      div class: "w-screen h-screen bg-black flex flex-col justify-center items-center" do
+        div(
+          class: "w-full aspect-[16/9] bg-neutral-50",
+          data: {
+            controller: "slide",
+            slide_next_value: slide_url(+1),
+            slide_previous_value: slide_url(-1)
+          },
+        ){
+          render @slide || BlankSlide.new
+        }
+      end
     end
   end
 
