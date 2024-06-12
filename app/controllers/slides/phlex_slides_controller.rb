@@ -226,7 +226,10 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         ContentSlide(title: "This presentation was built with Phlex 🤣"){
-          Code(:ruby, class: "overflow-scroll", file: __FILE__)
+          Code(:ruby,
+            class: "overflow-scroll",
+            file: __FILE__
+          )
         },
 
         ContentSlide(title: "Ruby Monolith Blog Demo: Inline Views"){

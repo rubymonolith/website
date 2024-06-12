@@ -55,7 +55,7 @@ class SlidesController < ApplicationController
           elsif file
             File.read(file)
           else
-            format_code(language:, source: source.call)
+            source.call
           end
           code { format_code(language:, source: source_code) }
         }
