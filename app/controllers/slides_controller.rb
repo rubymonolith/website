@@ -48,14 +48,21 @@ class SlidesController < ApplicationController
         end
       end
 
-      def Code(language, class: nil, **, &source)
+      def Code(language, class: nil, url: nil, file: nil, **, &source)
         pre(class: tokens("text-[0.7rem] md:text-md lg:text-lg xl:text-xl bg-gray-800 text-white rounded-2xl p-2 md:p-4 overflow-auto", class:)) {
-          code { format_code(language:, source: source.call) }
+          source_code = if url
+            HTTP.get(url).body.to_s
+          elsif file
+            File.read(file)
+          else
+            format_code(language:, source: source.call)
+          end
+          code { format_code(language:, source: source_code) }
         }
       end
 
       def HStack(class: nil, &)
-        div(class: tokens("flex flex-row gap-2 md:gap-8", class:), &)
+        div(class: tokens("flex flex-row gap-2 md:gap-8 min-w-full", class:), &)
       end
 
       def VStack(class: nil, &)

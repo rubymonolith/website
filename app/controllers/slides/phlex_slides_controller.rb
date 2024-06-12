@@ -94,10 +94,10 @@ class Slides::PhlexSlidesController < SlidesController
 
             Code(:ruby){
               <<~RUBY
-                render Nav.new do |nav|
-                  nav.item("/") { "Home" }
-                  nav.item("/about") { "About" }
-                  nav.item("/contact") { "Contact" }
+                render Nav.new do |it|
+                  it.item("/") { "Home" }
+                  it.item("/about") { "About" }
+                  it.item("/contact") { "Contact" }
                 end
               RUBY
             }
@@ -143,10 +143,10 @@ class Slides::PhlexSlidesController < SlidesController
                 def template
                   Sidebar {
                     Header { "My Site" }
-                    Nav do |nav|
-                      nav.item("/") { "Home" }
-                      nav.item("/about") { "About" }
-                      nav.item("/contact") { "Contact" }
+                    TailwindNav do |it|
+                      it.item("/") { "Home" }
+                      it.item("/about") { "About" }
+                      it.item("/contact") { "Contact" }
                     end
                   }
                 end
@@ -226,11 +226,23 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         ContentSlide(title: "This presentation was built with Phlex 🤣"){
-          Code(:ruby, class: "overflow-scroll"){ File.read(__FILE__) }
+          Code(:ruby, class: "overflow-scroll", file: __FILE__)
         },
 
-        ContentSlide(title: "Ruby Monolith Demo"){
-          Code(:ruby, class: "overflow-scroll"){ "def hi; puts 'hi'; end;" }
+        ContentSlide(title: "Ruby Monolith Blog Demo: Inline Views"){
+          p { "Start building out views in the controller" }
+          Code(:ruby,
+            class: "overflow-scroll",
+            url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/blogs_controller.rb"
+          )
+        },
+
+        ContentSlide(title: "Ruby Monolith Blog Demo: Extracted Views"){
+          p { "Then move them into the ./app/views folder" }
+          Code(:ruby,
+            class: "overflow-scroll",
+            url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/posts_controller.rb"
+          )
         },
 
         TitleSlide(
