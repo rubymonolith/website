@@ -4,7 +4,7 @@ class Slides::PhlexSlidesController < SlidesController
       [
         TitleSlide(
           title: "Build Rails Applications with 100% Phlex 💪",
-          subtitle: "A new way of thinking about the front-end in Rails",
+          subtitle: "Component-driven front-end development",
           class: "bg-blue-700 text-white"
         ),
 
@@ -16,7 +16,7 @@ class Slides::PhlexSlidesController < SlidesController
             * What works for me might not work best for you.
             * First look at Phlex and the thought is usually, "that's a terrible idea"
             * It's like Tailwind; you gotta try it.
-            * After you try it, half of you will love it and the other half of you will still hate it.
+            * After you try it, half of you will love it and the other half of you will still hate it. 🤣
             MARKDOWN
           }
         },
@@ -31,32 +31,38 @@ class Slides::PhlexSlidesController < SlidesController
         ){
           p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
           HStack {
-            Code(:ruby){
-              <<~RUBY
-                class Nav < Phlex::HTML
-                  def template
-                    nav(class: "main-nav") {
-                      ul {
-                        li { a(href: "/") { "Home" } }
-                        li { a(href: "/about") { "About" } }
-                        li { a(href: "/contact") { "Contact" } }
+            VStack {
+              p(class: "font-bold") { "Here's Phlex" }
+              Code(:ruby){
+                <<~RUBY
+                  class Nav < Phlex::HTML
+                    def template
+                      nav(class: "main-nav") {
+                        ul {
+                          li { a(href: "/") { "Home" } }
+                          li { a(href: "/about") { "About" } }
+                          li { a(href: "/contact") { "Contact" } }
+                        }
                       }
-                    }
+                    end
                   end
-                end
-              RUBY
+                RUBY
+              }
             }
 
-            Code(:html){
-              <<~HTML
-                <nav class="main-nav">
-                  <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                  </ul>
-                </nav>
-              HTML
+            VStack {
+              p(class: "font-bold") { "Here's the HTML it renders" }
+              Code(:html){
+                <<~HTML
+                  <nav class="main-nav">
+                    <ul>
+                      <li><a href="/">Home</a></li>
+                      <li><a href="/about">About</a></li>
+                      <li><a href="/contact">Contact</a></li>
+                    </ul>
+                  </nav>
+                HTML
+              }
             }
           }
         },
@@ -66,7 +72,7 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         ContentSlide(
-          title: "Make up for verbosity with abstractions."
+          title: "Phlex get's less verbose when you start building up a component library"
         ){
           p { "The Navigation Menu was refactored such that the dev doesn't need to worry about the item implementation" }
           HStack {
@@ -99,7 +105,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Extend Nav to create a Tailwind navigation"
+          title: "Phlex makes creating abstractions easy since it's just Ruby"
         ){
           p { "Useful if you're shipping a component library or prototyping new features" }
           VStack {
@@ -150,12 +156,14 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Take advantage of Ruby for your templates"
+          title: "Take fill advantage of Ruby for view templates"
         ){
           Markdown {
             <<~MARKDOWN
-            * Use `include` and `extend` in your views.
-            * Enforce data types with Ruby's type checking and method signatures.
+            * Use `include` and `extend` to mix behaviors into views.
+            * Compose views by rendering other views.
+            * Enforce data types with Ruby's method signatures & type checking.
+            * Distribute UI libraries via RubyGems.
             MARKDOWN
           }
         },
@@ -221,9 +229,76 @@ class Slides::PhlexSlidesController < SlidesController
           Code(:ruby, class: "overflow-scroll"){ File.read(__FILE__) }
         },
 
-        ContentSlide(title: "Blog demo"){
+        ContentSlide(title: "Ruby Monolith Demo"){
           Code(:ruby, class: "overflow-scroll"){ "def hi; puts 'hi'; end;" }
+        },
+
+        TitleSlide(
+          title: "Phlex Dreams 😍",
+          subtitle: "Ideas that get me excited about the future of Phlex"
+        ),
+
+        ContentSlide(
+          title: "Ruby Monolith"
+        ){
+          Markdown {
+            <<~MARKDOWN
+            * SaaS starter kit built entirely on Phlex.
+            * Lots of batteries included for auth, payments, etc.
+            * Most "web problems" would be solved so devs can focus on app problems.
+            MARKDOWN
+          }
+        },
+
+        ContentSlide(
+          title: "Site Phlex",
+        ){
+          p { "Building content pages with Front Matter could look like this:" }
+          Code(:ruby){
+            <<~RUBY
+              # ./app/content/pages/index.phlex.html
+              LandingPage(
+                title: "Get it now"
+              ){
+                Hero {
+                  Title { @title }
+                  Subtitle { "It's the best thing you'll ever get." }
+                  button(class: "btn btn-primary") { "Sign up" }
+                }
+                section {
+                  h2 { "Features" }
+                  Markdown {
+                    <<~MARKDOWN
+                    Here's everything you get:
+
+                    * A thing that goes "Ping!"
+                    * A bunch of extra batteries
+                    * A thing that goes "Boom!"
+                    MARKDOWN
+                  }
+                }
+              }
+            RUBY
+          }
+        },
+
+        ContentSlide(
+          title: "Try Phlex today!"
+        ){
+          Markdown {
+            <<~MARKDOWN
+            Try it in Rails:
+
+            ```ruby
+            $ gem install phlex-rails
+            $ rails g phlex:install
+            ```
+
+            Then head to Phlex.fun to learn more!
+            MARKDOWN
+          }
         }
+
       ]
     end
   end

@@ -43,13 +43,13 @@ class SlidesController < ApplicationController
       end
 
       def around_template(&)
-        div class: "text-sm md:text-md h-full" do
+        div class: "text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full" do
           VStack(class: tokens("p-4 md:p-12 h-full", @class), &)
         end
       end
 
       def Code(language, class: nil, **, &source)
-        pre(class: tokens("text-[0.7rem] md:text-md lg:text-lg xl:text-xl bg-gray-800 text-white rounded-2xl p-2 md:p-4", class:)) {
+        pre(class: tokens("text-[0.7rem] md:text-md lg:text-lg xl:text-xl bg-gray-800 text-white rounded-2xl p-2 md:p-4 overflow-auto", class:)) {
           code { format_code(language:, source: source.call) }
         }
       end
@@ -70,10 +70,12 @@ class SlidesController < ApplicationController
         h1(class: "text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-6xl", &)
       end
 
-      def Markdown(class: "prose-sm sm:prose-md md:prose-xl lg:prose-2xl", &source)
-        div(class:) do
-          render inline: source.call, type: :md
-        end
+      def Prose(class: "prose prose-sm sm:prose-md md:prose-xl lg:prose-2xl min-w-fit", &source)
+        div(class:, &source)
+      end
+
+      def Markdown(class: "prose prose-sm sm:prose-md md:prose-xl lg:prose-2xl min-w-fit", &source)
+        Prose { render inline: source.call, type: :md }
       end
 
       protected
