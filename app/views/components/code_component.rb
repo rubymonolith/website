@@ -22,8 +22,7 @@ class CodeComponent < ApplicationComponent
       style Name::Builtin,          class: "text-neutral-100"
       style Name::Class,            class: "text-pink-400"
       style Name::Variable::Instance, class: "text-sky-300"
-
-      # Add more styles as needed
+      style Name::Tag,              class: "text-yellow-300"
     end
 
     class HTMLFormatter < Rouge::Formatters::HTMLInline
