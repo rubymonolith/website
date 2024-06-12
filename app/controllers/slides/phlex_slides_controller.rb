@@ -23,11 +23,13 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "What is Phlex?",
-          subtitle: "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output."
-        ),
+        ){
+          Title { @title }
+          p(class: "text-4xl") { "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output." }
+        },
 
         ContentSlide(
-          title: "What does Phlex look like?"
+          title: "What does Phlex look like? 👀"
         ){
           p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
           HStack {
@@ -51,7 +53,7 @@ class Slides::PhlexSlidesController < SlidesController
             }
 
             VStack {
-              p(class: "font-bold") { "Here's the HTML it renders" }
+              p(class: "font-bold") { "Here's what it renders" }
               Code(:html){
                 <<~HTML
                   <nav class="main-nav">
@@ -67,22 +69,16 @@ class Slides::PhlexSlidesController < SlidesController
           }
         },
 
-        TitleSlide(
-          title: "That looks awfully verbose! 😅"
-        ),
-
         ContentSlide(
-          title: "Phlex get's less verbose when you start building up a component library"
+          title: "Slots are blocks"
         ){
-          p { "The Navigation Menu was refactored such that the dev doesn't need to worry about the item implementation" }
+          Markdown { "The `item` method accepts a block, which is rendered in the navigation `li` component" }
           HStack {
             Code(:ruby) {
               <<~RUBY
                 class Nav < Phlex::HTML
                   def template(&content)
-                    nav(class: "main-nav") {
-                      ul(&content)
-                    }
+                    nav(class: "main-nav") { ul(&content) }
                   end
 
                   def item(url, &content)
@@ -105,14 +101,16 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Phlex makes creating abstractions easy since it's just Ruby"
+          title: "Extend components with inheritence"
         ){
-          p { "Useful if you're shipping a component library or prototyping new features" }
+          Markdown { "Useful for shipping a component library or prototyping new features" }
           VStack {
             Code(:ruby) {
               <<~RUBY
                 class TailwindNav < Nav
-                  def template(&content) = nav(class: "flex flex-row gap-4", &content)
+                  def template(&content)
+                    nav(class: "flex flex-row gap-4", &content)
+                  end
 
                   def item(url, &content)
                     a(href: url, class: "text-underline", &content)
@@ -134,16 +132,54 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "And then there's Kits 🤩"
+          title: "Set defaults and require values with method signatures"
         ){
-          p { "Class functions will automatically initialize and render your components" }
+          Markdown { "Ruby method signatures enforce required data and sets defaults" }
+          HStack {
+            Code(:ruby) {
+              <<~RUBY
+                class TailwindNav < Phlex::HTML
+                  def initialize(title: "Main Menu")
+                    @title = title
+                  end
+
+                  def template(&content)
+                    h2(class: "font-bold") { @title }
+                    nav(class: "flex flex-row gap-4", &content)
+                  end
+
+                  def item(url, &content)
+                    a(href: url, class: "text-underline", &content)
+                  end
+                end
+              RUBY
+            }
+
+            Code(:ruby){
+              <<~RUBY
+                render TailwindNav.new title: "Site Menu" do |it|
+                  it.item("/") { "Home" }
+                  it.item("/about") { "About" }
+                  it.item("/contact") { "Contact" }
+                end
+              RUBY
+            }
+          }
+        },
+
+        ContentSlide(
+          title: "Beautiful code with Phlex Kits 🤩"
+        ){
+          p { "Class functions automatically initialize and render Phlex components" }
           Code(:ruby) {
             <<~RUBY
               class Page < ApplicationComponent
+                include Phlex::Kit
+
                 def template
                   Sidebar {
                     Header { "My Site" }
-                    TailwindNav do |it|
+                    TailwindNav title: "Site Menu" do |it|
                       it.item("/") { "Home" }
                       it.item("/about") { "About" }
                       it.item("/contact") { "Contact" }
@@ -156,15 +192,98 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Take fill advantage of Ruby for view templates"
+          title: "Do anything with Phlex that you can with Ruby"
         ){
           Markdown {
             <<~MARKDOWN
             * Use `include` and `extend` to mix behaviors into views.
-            * Compose views by rendering other views.
-            * Enforce data types with Ruby's method signatures & type checking.
+            * Compose views by rendering Phlex views within views.
+            * Enforce data types with Ruby's type checking.
             * Distribute UI libraries via RubyGems.
             MARKDOWN
+          }
+        },
+
+        TitleSlide(
+          title: "Using Phlex with Rails",
+          subtitle: "Incrementally go from zero to hero 🦸"
+        ),
+
+        ContentSlide(
+          title: "Install the Phlex Rails integration"
+        ){
+          Prose { "Install the phlex-rails gem:"}
+          Code(:sh) {
+            <<~SH
+              $ gem install phlex-rails
+              $ rails g phlex:install
+            SH
+          }
+          Markdown {
+            <<~MARKDOWN
+            This changes a few things in your Rails project:
+
+            * Adds view paths to `./config/application.rb`.
+            * Creates view files in `./app/views` and `./app/views/components`.
+
+            Reboot server to pick-up these changes!
+            MARKDOWN
+          }
+        },
+
+        ContentSlide(
+          title: "Rendering Phlex components from Erb"
+        ){
+          Prose { "Phlex components can be rendered from existing Erb views."}
+          Code(:erb) {
+            <<~ERB
+              <%= render TailwindNav.new title: "Site Menu" do |it| %>
+                <% it.item("/") { "Home" } %>
+                <% it.item("/about") { "About" } %>
+                <% it.item("/contact") { "Contact" } %>
+              <% end %>
+            ERB
+          }
+        },
+
+        ContentSlide(
+          title: "Render Phlex pages from controllers"
+        ){
+          Prose { "Start rendering entire pages using Phlex from the controller."}
+          Code(:ruby) {
+            <<~RUBY
+              class ProfileController < ApplicationController
+                before_action { @user = User.find(params.fetch(:id)) }
+
+                def show
+                  render Views::Profile.new(user: @user)
+                end
+              end
+            RUBY
+          }
+        },
+
+        ContentSlide(
+          title: "Go all-in on Phlex with Superview"
+        ){
+          Markdown { "Install the `superview` gem and embed view classes right in the controller."}
+          Code(:ruby) {
+            <<~RUBY
+              class ProfileController < ApplicationController
+                before_action { @user = User.find(params.fetch(:id)) }
+
+                include Superview::Actions
+
+                # Rails will map the `show` action to the `Show` class.
+                class Show
+                  attr_writer :current_user
+
+                  def template
+                    h1 { "Hi \#{@current_user.name}" }
+                  end
+                end
+              end
+            RUBY
           }
         },
 
@@ -296,23 +415,6 @@ class Slides::PhlexSlidesController < SlidesController
             RUBY
           }
         },
-
-        ContentSlide(
-          title: "Try Phlex today!"
-        ){
-          Markdown {
-            <<~MARKDOWN
-            Try it in Rails:
-
-            ```ruby
-            $ gem install phlex-rails
-            $ rails g phlex:install
-            ```
-
-            Then head to Phlex.fun to learn more!
-            MARKDOWN
-          }
-        }
 
       ]
     end

@@ -7,7 +7,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   include Redcarpet::Render::SmartyPants
 
   # Uncomment and run `bundle add rouge` for syntax highlighting
-  include MarkdownRails::Helper::Rouge
+#  include MarkdownRails::Helper::Rouge
 
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
   # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
@@ -26,6 +26,12 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # Make sure you know what you're doing if you're using this to render user inputs.
   def enable
     [:fenced_code_blocks]
+  end
+
+  def block_code(source, language)
+    content_tag :pre, class: "overflow-auto" do
+      render CodeComponent.new(language:, source:)
+    end
   end
 
   # # These methods are called as the Markdown document is parsed. Block-level calls are
