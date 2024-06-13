@@ -132,13 +132,13 @@ class SlidesController < ApplicationController
     end
 
     def view_template
+      div class: "sticky top-0 py-4 px-4 backdrop-blur-lg bg-neutral-50 bg-opacity-75 flex flex-row justify-between items-center shadow-xl" do
+        span(class: "font-bold") { @presentation.title }
+        a(href: url_for(action: :show, id: 0), class: "p-2 px-6 outline outline-1 rounded-full"){ "▶ Present" }
+      end
       ol(class: "divide-y divide-neutral-500 divide-y-2 snap-y snap-mandatory") {
         @presentation.slides.each.with_index do |slide, index|
-          li(class: "snap-start overflow-auto") {
-            a(href: url_for(action: :show, id: index)) {
-              render slide
-            }
-          }
+          li(class: "snap-start overflow-auto") { render slide }
         end
       }
     end

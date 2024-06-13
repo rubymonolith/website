@@ -1,10 +1,11 @@
 class Slides::PhlexSlidesController < SlidesController
   class Presentation < Presentation
+    def title = "Build Phlex Rails Applications 💪"
     def slides
       [
 
         TitleSlide(
-          title: "Build Rails Applications with 100% Phlex 💪",
+          title: title,
           subtitle: "Component-driven front-end development",
           class: "bg-purple-700 text-white"
         ),
@@ -244,6 +245,8 @@ class Slides::PhlexSlidesController < SlidesController
             * Creates view files in `./app/views` and `./app/views/components`.
 
             Reboot server to pick-up these changes!
+
+            Make sure you checkout the website, [Phlex.fun](https://phlex.fun) for more examples and docs.
             MARKDOWN
           }
         },
@@ -254,6 +257,7 @@ class Slides::PhlexSlidesController < SlidesController
           Prose { "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."}
           Code(:erb, title: "Erb") {
             <<~HTML
+              <h1>Hello</h1>
               <%= render TailwindNav.new title: "Site Menu" do |it| %>
                 <% it.item("/") { "Home" } %>
                 <% it.item("/about") { "About" } %>
@@ -263,10 +267,11 @@ class Slides::PhlexSlidesController < SlidesController
           }
           Code(:slim, title: "Slim") {
             <<~SLIM
+              h1 Hello
               = render TailwindNav.new title: "Site Menu" do |it|
-                it.item("/") { "Home" }
-                it.item("/about") { "About" }
-                it.item("/contact") { "Contact" }
+                - it.item("/") { "Home" }
+                - it.item("/about") { "About" }
+                - it.item("/contact") { "Contact" }
             SLIM
           }
         },
@@ -278,7 +283,7 @@ class Slides::PhlexSlidesController < SlidesController
           Code(:ruby) {
             <<~RUBY
               # ./app/views/profile.rb
-              class Views::Profile < ApplicationComponent
+              class Views::Profile < PageView
                 def initialize(user:)
                   @user = user
                 end
@@ -294,6 +299,27 @@ class Slides::PhlexSlidesController < SlidesController
                     main do
                       h1 { "Hi #\{@user.name} "}
                     end
+                  end
+                end
+              end
+            RUBY
+          }
+        },
+
+        ContentSlide(
+          title: "Page Layouts are superclasses"
+        ){
+          Prose { "Pages inherit from a superclass that implements an `around_template`, wrapping the contents of `template` in the subclass." }
+          Code(:ruby) {
+            <<~RUBY
+              # ./app/views/page_view.rb
+              class PageView < ApplicationComponent
+                def around_template(&content)
+                  html do
+                    head do
+                      title { @title || "My Site" }
+                    end
+                    body(&content)
                   end
                 end
               end
@@ -497,7 +523,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         TitleSlide(
-          title: "What are some websites built with Phlex running in production?"
+          title: "Rails Apps I've built running Phlex in production"
         ),
 
         TitleSlide(
@@ -509,7 +535,7 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         TitleSlide(
-          title: "What are some Phlex projects I can look at?"
+          title: "Rails Apps you can look at to learn about building Rails Phlex apps",
         ),
 
         ContentSlide(title: "This presentation was built with Phlex 🤣"){
@@ -521,17 +547,15 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "Phlex Dreams 😍",
-          subtitle: "Ideas that get me excited about the future of Phlex"
+          subtitle: "A few projects in their early stages that I hope come to life"
         ),
 
         ContentSlide(
-          title: "Ruby Monolith"
+          title: "Phlex.js"
         ){
           Markdown {
             <<~MARKDOWN
-            * SaaS starter kit built entirely on Phlex.
-            * Lots of batteries included for auth, payments, etc.
-            * Most "web problems" would be solved so devs can focus on app problems.
+            * Render only the parts of the page that change on the client.
             MARKDOWN
           }
         },
@@ -565,6 +589,18 @@ class Slides::PhlexSlidesController < SlidesController
                 }
               }
             RUBY
+          }
+        },
+
+        ContentSlide(
+          title: "Ruby Monolith"
+        ){
+          Markdown {
+            <<~MARKDOWN
+            * App framework built entirely on Phlex.
+            * Lots of batteries included for auth, payments, etc.
+            * Most "web problems" would be solved so devs can focus on app problems.
+            MARKDOWN
           }
         },
 
