@@ -616,12 +616,23 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "That's a wrap"
+          title: "That's a wrap! Any questions? 🧐",
         ){
-          Markdown {
-            <<~MARKDOWN
+          TwoUp {
+            Markdown {
+              <<~MARKDOWN
+              Thanks for listening! Scan the QR code for slides and these links:
 
-            MARKDOWN
+              * [Phlex.fun](https://phlex.fun)
+              * [Ruby Monolith Demo](https://demo.rubymonolith.com)
+              * [Fly.io](https://fly.io)
+              * [Presentation Source Code](https://github.com/rubymonolith/website)
+
+              If you don't have any questions now, you'll find me on Twitter [@bradgessler](https://twitter.com/bradgessler) or [bradgessler@ruby.social](https://ruby.social/@bradgessler).
+
+              MARKDOWN
+            }
+            img(src: "https://objects.bradgessler.com/qr-tinyzap-co.svg", class: "w-full")
           }
         },
 
