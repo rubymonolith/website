@@ -10,21 +10,33 @@ class Slides::PhlexSlidesController < SlidesController
           class: "bg-purple-700 text-white"
         ),
 
-        ContentSlide(
+        TitleSlide(
           title: "⚠️ WARNING ⚠️",
-        ){
-          Markdown {
-            <<~MARKDOWN
-            * What works for me might not work best for you.
-            * First look at Phlex and the thought is usually, "that's a terrible idea"
-            * It's like Tailwind; you gotta try it.
-            * After you try it, half of you will love it and the other half of you will still hate it. 🤣
-            MARKDOWN
-          }
-        },
+          subtitle: "What works for me might not work best for you.",
+          class: "bg-red-600 text-white"
+        ),
 
         TitleSlide(
-          title: "Phlex 💪"
+          title: "⚠️ WARNING ⚠️",
+          subtitle: %{First look at Phlex and the thought is usually, "that's a terrible idea"—It's like Tailwind; you gotta try it.},
+          class: "bg-red-700 text-white"
+        ),
+
+        TitleSlide(
+          title: "⚠️ WARNING ⚠️",
+          subtitle: %{After you try it, half of you will love it 🥰. The other half of you will hate it 🙅.},
+          class: "bg-red-800 text-white"
+        ),
+
+        TitleSlide(
+          title: "⚠️ WARNING ⚠️",
+          subtitle: %{I did a stupid thing and created this presentation software while creating this presentation.},
+          class: "bg-red-900 text-white lg:animate-pulse lg:animate-bounce"
+        ),
+
+        TitleSlide(
+          title: "Phlex 💪",
+          class: "bg-blue-700 text-white",
         ){
           Title(class: "font-serif") {
             span { @title }
@@ -105,7 +117,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Extend components with inheritence"
+          title: "Extend components with inheritence 👴"
         ){
           Markdown { "Useful for shipping component libraries, prototyping new features, or for page layouts." }
           TwoUp {
@@ -148,7 +160,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Set default & require values with method signatures"
+          title: "Set default & require values with method signatures ✍️"
         ){
           Markdown { "Ruby method signatures enforce required data and sets defaults" }
           TwoUp {
@@ -224,7 +236,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "Use Phlex with Rails",
-          subtitle: "Incrementally go from zero 🫣 to hero 🦸"
+          subtitle: "Incrementally go from zero 🫣 to hero 🦸",
+          class: "bg-gradient-to-tl from-red-500 to-orange-500 text-white"
         ),
 
         ContentSlide(
@@ -347,13 +360,14 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "The amibitious possibilities of Phlex",
-          subtitle: "A few projects that get me excited about the future of Phlex"
+          subtitle: "A few projects that get me excited about the future of Phlex",
+          class: "bg-gradient-to-tl from-green-500 to-blue-500 text-white"
         ),
 
         TitleSlide(
           title: "Superview",
           subtitle: "Build Rails applications, from the ground up, using Phlex components",
-          class: "bg-orange-700 text-white"
+          class: "bg-gradient-to-tl from-slate-500 to-slate-800 text-white"
         ),
 
         ContentSlide(title: "Inline Views"){
@@ -381,7 +395,7 @@ class Slides::PhlexSlidesController < SlidesController
         TitleSlide(
           title: "Superform 🦸",
           subtitle: "The best way to build forms in Rails applications",
-          class: "bg-green-700 text-white"
+          class: "bg-gradient-to-r from-teal-400 to-yellow-200 text-black"
         ),
 
         ContentSlide(
@@ -509,36 +523,52 @@ class Slides::PhlexSlidesController < SlidesController
         #   }
         # },
 
+        TitleSlide(
+          title: "Rails Apps using Phlex Components",
+          subtitle: "A few projects I built and shipped to production with Phlex"
+        ),
+
         ContentSlide(
-          title: "Phlex UI & more..."
+          title: "TinyZap⚡️",
         ){
-          Markdown {
-            <<~MARKDOWN
-            Entire UI toolkits are being built for Phlex like
-            * phlexui
-            * ZestUI
-            * ...
-            MARKDOWN
+          Markdown { "My first 100% Phlex production app. Used for UI and OpenGraph image generation." }
+          a(href: "https://tinyzap.com/"){
+            img(src: "https://objects.bradgessler.com/Screenshot-2024-06-13-at-12.41.05.png")
+          }
+        },
+
+        ContentSlide(
+          title: "Thingybase",
+        ){
+          Markdown { "Migrating templates from Slim to Phlex as I enhance the app." }
+          a(href: "https://www.thingybase.com/"){
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-45-56.png")
+          }
+        },
+
+        ContentSlide(
+          title: "Legible News",
+        ){
+          Markdown { "Migrating templates from Slim & Erb to Phlex as I enhance the app." }
+          a(href: "https://legiblenews.com/"){
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-50-54.png")
           }
         },
 
         TitleSlide(
-          title: "Rails Apps I've built running Phlex in production"
+          title: "Open Source Rails Apps",
+          subtitle: "Projects you can look at to see how to use Phlex in Rails"
         ),
 
-        TitleSlide(
-          title: "TinyZap⚡️",
-        ),
-
-        TitleSlide(
-          title: "Thingybase"
-        ),
-
-        TitleSlide(
-          title: "Rails Apps you can look at to learn about building Rails Phlex apps",
-        ),
+        ContentSlide(title: "Ruby Monolith Blog Demo"){
+          Markdown { "Source available at https://github.com/rubymonolith/demo" }
+          a(href: "https://demo.rubymonolith.com/"){
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-13-25-58.png")
+          }
+        },
 
         ContentSlide(title: "This presentation was built with Phlex 🤣"){
+          Markdown { "Source available at [https://github.com/rubymonolith/website](https://github.com/rubymonolith/website/blob/main/app/controllers/slides/phlex_slides_controller.rb)" }
           Code(:ruby,
             class: "overflow-scroll",
             file: __FILE__
@@ -551,12 +581,11 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         ContentSlide(
-          title: "Phlex.js"
+          title: "UI Toolkits built with Phlex"
         ){
-          Markdown {
-            <<~MARKDOWN
-            * Render only the parts of the page that change on the client.
-            MARKDOWN
+          Markdown { "A few already exist like [PhlexUI](https://phlexui.com) and [ZestUI](https://zestui.com)." }
+          a(href: "https://phlexui.com") {
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-13-18-09.png")
           }
         },
 
@@ -595,12 +624,8 @@ class Slides::PhlexSlidesController < SlidesController
         ContentSlide(
           title: "Ruby Monolith"
         ){
-          Markdown {
-            <<~MARKDOWN
-            * App framework built entirely on Phlex.
-            * Lots of batteries included for auth, payments, etc.
-            * Most "web problems" would be solved so devs can focus on app problems.
-            MARKDOWN
+          a(href: "https://rubymonolith.com/"){
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-13-30-26.png")
           }
         },
 

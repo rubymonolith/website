@@ -136,7 +136,7 @@ class SlidesController < ApplicationController
         span(class: "font-bold") { @presentation.title }
         a(href: url_for(action: :show, id: 0), class: "p-2 px-6 outline outline-1 rounded-full"){ "▶ Present" }
       end
-      ol(class: "divide-y divide-neutral-500 divide-y-2 snap-y snap-mandatory") {
+      ol(class: "divide-y divide-neutral-500 divide-y-1 snap-y snap-mandatory") {
         @presentation.slides.each.with_index do |slide, index|
           li(class: "snap-start overflow-auto") { render slide }
         end
