@@ -122,14 +122,26 @@ class Slides::PhlexSlidesController < SlidesController
               RUBY
             }
 
-            Code(:html, title: "Rendered output"){
-              <<~HTML
-                <nav class="flex flex-row gap-4">
-                  <a href="/" class="text-underline">Home</a>
-                  <a href="/about" class="text-underline">About</a>
-                  <a href="/contact" class="text-underline">Contact</a>
-                </nav>
-              HTML
+            VStack {
+              Code(:ruby, title: "Calling the navigation component"){
+                <<~RUBY
+                  render TailwindNav.new do |it|
+                    it.item("/") { "Home" }
+                    it.item("/about") { "About" }
+                    it.item("/contact") { "Contact" }
+                  end
+                RUBY
+              }
+
+              Code(:html, title: "Rendered output"){
+                <<~HTML
+                  <nav class="flex flex-row gap-4">
+                    <a href="/" class="text-underline">Home</a>
+                    <a href="/about" class="text-underline">About</a>
+                    <a href="/contact" class="text-underline">Contact</a>
+                  </nav>
+                HTML
+              }
             }
           }
         },
@@ -182,6 +194,7 @@ class Slides::PhlexSlidesController < SlidesController
                 def template
                   Sidebar {
                     Header { "My Site" }
+                    p(class: "text-lg font-bold") { "Let's mix components with some HTML tags." }
                     TailwindNav title: "Site Menu" do |it|
                       it.item("/") { "Home" }
                       it.item("/about") { "About" }
@@ -239,7 +252,7 @@ class Slides::PhlexSlidesController < SlidesController
           title: "Render Phlex components from existing templates"
         ){
           Prose { "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."}
-          Code(:erb) {
+          Code(:erb, title: "Erb") {
             <<~HTML
               <%= render TailwindNav.new title: "Site Menu" do |it| %>
                 <% it.item("/") { "Home" } %>
@@ -247,6 +260,14 @@ class Slides::PhlexSlidesController < SlidesController
                 <% it.item("/contact") { "Contact" } %>
               <% end %>
             HTML
+          }
+          Code(:slim, title: "Slim") {
+            <<~SLIM
+              = render TailwindNav.new title: "Site Menu" do |it|
+                it.item("/") { "Home" }
+                it.item("/about") { "About" }
+                it.item("/contact") { "Contact" }
+            SLIM
           }
         },
 
@@ -256,6 +277,7 @@ class Slides::PhlexSlidesController < SlidesController
           Prose { "Here's what a page might look like in Phlex" }
           Code(:ruby) {
             <<~RUBY
+              # ./app/views/profile.rb
               class Views::Profile < ApplicationComponent
                 def initialize(user:)
                   @user = user
