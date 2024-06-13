@@ -7,8 +7,8 @@ class SlidesController < ApplicationController
       end
 
       def around_template(&)
-        div class: tokens("text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full p-4 md:p-12", @class) do
-          div class: "lg:aspect-[16/9] w-full" do
+        div class: tokens("text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full p-4 md:p-12 flex align-center justify-center", @class) do
+          div class: "min-h-[50vh] w-full" do
             VStack(class: "p-4 md:p-12 h-full", &)
           end
         end
