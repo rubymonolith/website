@@ -7,7 +7,7 @@ class Slides::PhlexSlidesController < SlidesController
         TitleSlide(
           title: title,
           subtitle: "Component-driven front-end development",
-          class: "bg-purple-700 text-white"
+          class: "bg-gradient-to-tr from-violet-600 to-indigo-600 text-white"
         ),
 
         TitleSlide(
@@ -18,13 +18,13 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "⚠️ WARNING ⚠️",
-          subtitle: %{First look at Phlex and the thought is usually, "that's a terrible idea"—It's like Tailwind; you gotta try it.},
+          subtitle: %{First look at Phlex and the thought is usually, "that's a terrible idea"—It's like Tailwind; you just gotta try it.},
           class: "bg-red-700 text-white"
         ),
 
         TitleSlide(
           title: "⚠️ WARNING ⚠️",
-          subtitle: %{After you try it, half of you will love it 🥰. The other half of you will hate it 🙅.},
+          subtitle: %{After you try it, half of you will love it 🥰. The other half of you will probably hate it 🙅.},
           class: "bg-red-800 text-white"
         ),
 
@@ -51,9 +51,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "This is a Phlex component 👀"
+          title: "This is a Phlex component 👀",
+          subtitle: "Phlex is a plain 'ol Ruby object that can render HTML. Check out this navigation menu implemented in Phlex."
         ){
-          p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this navigation menu implemented in Phlex." }
           TwoUp {
             VStack {
               Code(:ruby, title: "Here's Phlex"){
@@ -90,9 +90,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Slots are blocks 🧱"
+          title: "Slots are blocks 🧱",
+          subtitle: "The `item` method accepts a block, which is rendered in the navigation `li > a` tag."
         ){
-          Markdown { "The `item` method accepts a block, which is rendered in the navigation `li > a` tag." }
           TwoUp {
             Code(:ruby, title: "Navigation component implementation") {
               <<~RUBY
@@ -121,9 +121,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Extend components with inheritence 👴"
+          title: "Extend components with inheritence 👴",
+          subtitle: "Useful for shipping component libraries, prototyping new features, or for page layouts."
         ){
-          Markdown { "Useful for shipping component libraries, prototyping new features, or for page layouts." }
           TwoUp {
             Code(:ruby, title: "Tailwind component") {
               <<~RUBY
@@ -164,9 +164,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Set default & require values with method signatures ✍️"
+          title: "Set default & require values with method signatures ✍️",
+          subtitle: "Ruby method signatures enforce required data and sets defaults"
         ){
-          Markdown { "Ruby method signatures enforce required data and sets defaults" }
           TwoUp {
             Code(:ruby, title: "Set default values in arguments"){
               <<~RUBY
@@ -200,9 +200,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Write beautiful code with Phlex Kits 🤩"
+          title: "Write beautiful code with Phlex Kits 🤩",
+          subtitle: "Class functions automatically initialize and render Phlex components"
         ){
-          p { "Class functions automatically initialize and render Phlex components" }
           Code(:ruby) {
             <<~RUBY
               class Page < ApplicationComponent
@@ -269,9 +269,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Render Phlex components from existing templates 😑"
+          title: "Render Phlex components from existing templates 😑",
+          subtitle: "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."
         ){
-          Prose { "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."}
           Code(:erb, title: "Erb") {
             <<~HTML
               <h1>Hello</h1>
@@ -294,9 +294,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Build pages with Phlex 😐"
+          title: "Build pages with Phlex 😐",
+          subtitle: "Here's what a page might look like in Phlex"
         ){
-          Prose { "Here's what a page might look like in Phlex" }
           Code(:ruby) {
             <<~RUBY
               # ./app/views/profile.rb
@@ -324,9 +324,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Page Layouts are superclasses 🙂"
+          title: "Page Layouts are superclasses 🙂",
+          subtitle: "Pages inherit from a superclass that implements an `around_template`, wrapping the contents of `template` in the subclass."
         ){
-          Prose { "Pages inherit from a superclass that implements an `around_template`, wrapping the contents of `template` in the subclass." }
           Code(:ruby) {
             <<~RUBY
               # ./app/views/page_view.rb
@@ -345,9 +345,10 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Render Phlex pages from controllers 😀"
+          title: "Render Phlex pages from controllers 😀",
+          subtitle: "Render an instance of a Phlex view from a controller action."
         ){
-          Code(:ruby, title: "Render an instance of a Phlex view from a controller action.") {
+          Code(:ruby) {
             <<~RUBY
               class ProfileController < ApplicationController
                 before_action { @user = User.find(params.fetch(:id)) }
@@ -374,16 +375,20 @@ class Slides::PhlexSlidesController < SlidesController
           class: "bg-gradient-to-tl from-slate-500 to-slate-800 text-white"
         ),
 
-        ContentSlide(title: "Inline Views"){
-          p { "Start building out views in the controller, kinda like building apps in Sinatra" }
+        ContentSlide(
+          title: "Inline Views",
+          subtitle: "Start building out views in the controller, kinda like building apps in Sinatra"
+        ){
           Code(:ruby,
             class: "overflow-scroll",
             url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/blogs_controller.rb"
           )
         },
 
-        ContentSlide(title: "Extracted Views"){
-          Markdown { "Move views to `./app/views/*` folder to organize or share with other controllers." }
+        ContentSlide(
+          title: "Extracted Views",
+          subtitle: "Move views to `./app/views/*` folder to organize or share with other controllers."
+        ){
           TwoUp {
             Code(:ruby,
               class: "overflow-scroll",
@@ -467,7 +472,8 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Superform can permit its own parameters 🥳"
+          title: "Superform can permit its own parameters 🥳",
+          subtitle: "It's been almost two years since the last time a forgotten strong parameter caused a bug"
         ){
           Code(:ruby) {
             <<~RUBY
@@ -493,40 +499,6 @@ class Slides::PhlexSlidesController < SlidesController
           }
         },
 
-        # ContentSlide(
-        #   title: "Embed Phlex views in controllers with Superview"
-        # ){
-        #   Markdown { "Install the `superview` gem and embed view classes right in the controller."}
-        #   Code(:ruby) {
-        #     <<~RUBY
-        #       class ProfileController < ApplicationController
-        #         before_action { @user = User.find(params.fetch(:id)) }
-
-        #         include Superview::Actions
-
-        #         # Rails will map the `show` action to the `Show` class.
-        #         class Show < ApplicationComponent
-        #           attr_writer :user
-
-        #           def template
-        #             div class: "grid grid-cols-2 gap-8" do
-        #               render TailwindNav.new do |it|
-        #                 it.item("/password") { "Change password" }
-        #                 it.item("/logout") { "Log out" }
-        #                 it.item("/settings") { "Settings" }
-        #               end
-
-        #               main do
-        #                 h1 { "Hi #\{@user.name} "}
-        #               end
-        #             end
-        #           end
-        #         end
-        #       end
-        #     RUBY
-        #   }
-        # },
-
         TitleSlide(
           title: "Rails Apps using Phlex Components",
           subtitle: "A few projects I built and shipped to production with Phlex"
@@ -534,8 +506,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         ContentSlide(
           title: "TinyZap⚡️",
+          subtitle: "My first 100% Phlex production app. Used for UI and OpenGraph image generation."
         ){
-          Markdown { "My first 100% Phlex production app. Used for UI and OpenGraph image generation." }
           a(href: "https://tinyzap.com/"){
             img(src: "https://objects.bradgessler.com/Screenshot-2024-06-13-at-12.41.05.png")
           }
@@ -543,8 +515,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         ContentSlide(
           title: "Thingybase",
+          subtitle: "Migrating templates from Slim to Phlex as I enhance the app."
         ){
-          Markdown { "Migrating templates from Slim to Phlex as I enhance the app." }
           a(href: "https://www.thingybase.com/"){
             img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-45-56.png")
           }
@@ -552,8 +524,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         ContentSlide(
           title: "Legible News",
+          subtitle: "Migrating templates from Slim & Erb to Phlex as I enhance the app."
         ){
-          Markdown { "Migrating templates from Slim & Erb to Phlex as I enhance the app." }
           a(href: "https://legiblenews.com/"){
             img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-50-54.png")
           }
@@ -595,8 +567,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         ContentSlide(
           title: "Site Phlex",
+          subtitle: "Building content pages with Front Matter could look like this:"
         ){
-          p { "Building content pages with Front Matter could look like this:" }
           Code(:ruby){
             <<~RUBY
               # ./app/content/pages/index.phlex.html
@@ -631,6 +603,12 @@ class Slides::PhlexSlidesController < SlidesController
           a(href: "https://rubymonolith.com/"){
             img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-13-30-26.png")
           }
+        },
+
+        ContentSlide(
+          title: "That's a wrap"
+        ){
+
         },
 
       ]

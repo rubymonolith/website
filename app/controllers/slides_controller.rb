@@ -47,7 +47,7 @@ class SlidesController < ApplicationController
       end
 
       def Subtitle(class: nil, &)
-        h1(class: tokens("text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl", class:), &)
+        h1(class: tokens("text-md sm:text-xl md:text-3xl lg:text-4xl", class:), &)
       end
 
       def Prose(class: "prose prose-sm sm:prose-md md:prose-xl lg:prose-2xl min-w-fit", &source)
@@ -78,9 +78,15 @@ class SlidesController < ApplicationController
         super(class: "xl:text-8xl", **, &)
       end
 
+      def Subtitle(class: nil, &)
+        super(class: tokens("xl:text-5xl", class:), &)
+      end
+
       def template
-        Title { @title } if @title
-        Subtitle { @subtitle } if @subtitle
+        hgroup(class: "flex flex-col gap-4") do
+          Title { @title }
+          Subtitle { @subtitle } if @subtitle
+        end
       end
 
       def around_template
@@ -93,12 +99,23 @@ class SlidesController < ApplicationController
     end
 
     class ContentSlide < Slide
+      def initialize(*, subtitle: nil, **, &)
+        super(*, **, &)
+        @subtitle = subtitle
+      end
+
       def around_template
         super do
-          Title { @title }
+          hgroup(class: "flex flex-col gap-4") do
+            Title { @title }
+            Subtitle { @subtitle } if @subtitle
+          end
           yield
         end
       end
+    end
+
+    class CodeSlide < Slide
     end
   end
 
