@@ -514,20 +514,30 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Thingybase",
-          subtitle: "Migrating templates from Slim to Phlex as I enhance the app."
-        ){
-          a(href: "https://www.thingybase.com/"){
-            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-45-56.png")
-          }
-        },
-
-        ContentSlide(
           title: "Legible News",
           subtitle: "Migrating templates from Slim & Erb to Phlex as I enhance the app."
         ){
           a(href: "https://legiblenews.com/"){
             img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-50-54.png")
+          }
+        },
+
+        TitleSlide(
+          title: "Hosted on Fly.io",
+          class: "bg-violet-950 text-white"
+        ){
+          a class: "flex flex-col gap-12 justify-center items-center", href: "https://fly.io/" do
+            img(src: "https://objects.bradgessler.com/logo-portrait-light.svg", class: "h-96")
+            Subtitle { "All of these apps are deployed and running on Fly.io" }
+          end
+        },
+
+        ContentSlide(
+          title: "Thingybase",
+          subtitle: "Migrating templates from Slim to Phlex as I enhance the app."
+        ){
+          a(href: "https://www.thingybase.com/"){
+            img(src: "https://objects.bradgessler.com/Shared-Image-2024-06-13-12-45-56.png")
           }
         },
 
@@ -608,7 +618,11 @@ class Slides::PhlexSlidesController < SlidesController
         ContentSlide(
           title: "That's a wrap"
         ){
+          Markdown {
+            <<~MARKDOWN
 
+            MARKDOWN
+          }
         },
 
       ]

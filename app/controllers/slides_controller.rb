@@ -1,16 +1,24 @@
 class SlidesController < ApplicationController
   module Layouts
     class Slide < ApplicationView
-      def initialize(title: nil, class: "bg-neutral-50", &block)
+      def initialize(title: nil, subtitle: nil, class: "bg-neutral-50", &block)
         @title = title
+        @subtitle = subtitle
         @class = kwarg(class:)
       end
 
       def around_template(&)
-        div class: tokens("text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full p-4 md:p-12 flex align-center justify-center", @class) do
-          div class: "min-h-[50vh] w-full" do
+        div class: tokens("text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full p-4 md:p-12", @class) do
+          div class: "lg:aspect-[16/9] w-full" do
             VStack(class: "p-4 md:p-12 h-full", &)
           end
+        end
+      end
+
+      def title_template
+        hgroup(class: "flex flex-col gap-4") do
+          Title { @title }
+          Subtitle { @subtitle } if @subtitle
         end
       end
 
@@ -83,10 +91,8 @@ class SlidesController < ApplicationController
       end
 
       def template
-        hgroup(class: "flex flex-col gap-4") do
-          Title { @title }
-          Subtitle { @subtitle } if @subtitle
-        end
+        title_template
+        yield if block_given?
       end
 
       def around_template
@@ -99,23 +105,17 @@ class SlidesController < ApplicationController
     end
 
     class ContentSlide < Slide
-      def initialize(*, subtitle: nil, **, &)
-        super(*, **, &)
-        @subtitle = subtitle
-      end
-
       def around_template
         super do
-          hgroup(class: "flex flex-col gap-4") do
-            Title { @title }
-            Subtitle { @subtitle } if @subtitle
-          end
+          title_template
           yield
         end
       end
     end
 
     class CodeSlide < Slide
+      def template
+      end
     end
   end
 
