@@ -225,7 +225,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Do in Phlex what you do with Ruby"
+          title: "Phlex is just Ruby! 💎"
         ){
           Markdown {
             <<~MARKDOWN
@@ -233,7 +233,7 @@ class Slides::PhlexSlidesController < SlidesController
             * Compose views by rendering Phlex views within views.
             * Enforce data types with Ruby's type checking.
             * Distribute UI libraries via RubyGems.
-            * Less "stuff" than Erb and ViewComponents.
+            * More boring and less "stuff" than Erb and ViewComponents.
             MARKDOWN
           }
         },
