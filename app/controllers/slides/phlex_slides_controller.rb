@@ -2,10 +2,11 @@ class Slides::PhlexSlidesController < SlidesController
   class Presentation < Presentation
     def slides
       [
+
         TitleSlide(
           title: "Build Rails Applications with 100% Phlex 💪",
           subtitle: "Component-driven front-end development",
-          class: "bg-blue-700 text-white"
+          class: "bg-purple-700 text-white"
         ),
 
         ContentSlide(
@@ -22,20 +23,23 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         TitleSlide(
-          title: "What is Phlex?",
+          title: "Phlex"
         ){
-          Title { @title }
-          p(class: "text-4xl") { "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output." }
+          Title(class: "font-serif") {
+            span { @title }
+            whitespace
+            span(class: "font-light italic") { "/fleks/" }
+          }
+          Subtitle(class: "font-serif") { "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output." }
         },
 
         ContentSlide(
           title: "What does Phlex look like? 👀"
         ){
           p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
-          HStack {
+          TwoUp {
             VStack {
-              p(class: "font-bold") { "Here's Phlex" }
-              Code(:ruby){
+              Code(:ruby, title: "Here's Phlex"){
                 <<~RUBY
                   class Nav < Phlex::HTML
                     def template
@@ -53,8 +57,7 @@ class Slides::PhlexSlidesController < SlidesController
             }
 
             VStack {
-              p(class: "font-bold") { "Here's what it renders" }
-              Code(:html){
+              Code(:html, title: "Here's what it renders"){
                 <<~HTML
                   <nav class="main-nav">
                     <ul>
@@ -70,11 +73,11 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Slots are blocks"
+          title: "Slots are blocks 🧱"
         ){
           Markdown { "The `item` method accepts a block, which is rendered in the navigation `li` component" }
-          HStack {
-            Code(:ruby) {
+          TwoUp {
+            Code(:ruby, title: "Navigation component implementation") {
               <<~RUBY
                 class Nav < Phlex::HTML
                   def template(&content)
@@ -88,7 +91,7 @@ class Slides::PhlexSlidesController < SlidesController
               RUBY
             }
 
-            Code(:ruby){
+            Code(:ruby, title: "Calling the navigation component"){
               <<~RUBY
                 render Nav.new do |it|
                   it.item("/") { "Home" }
@@ -104,8 +107,8 @@ class Slides::PhlexSlidesController < SlidesController
           title: "Extend components with inheritence"
         ){
           Markdown { "Useful for shipping a component library or prototyping new features" }
-          VStack {
-            Code(:ruby) {
+          TwoUp {
+            Code(:ruby, title: "Tailwind component") {
               <<~RUBY
                 class TailwindNav < Nav
                   def template(&content)
@@ -119,7 +122,7 @@ class Slides::PhlexSlidesController < SlidesController
               RUBY
             }
 
-            Code(:html){
+            Code(:html, title: "Rendered output"){
               <<~HTML
                 <nav class="flex flex-row gap-4">
                   <a href="/" class="text-underline">Home</a>
@@ -135,8 +138,8 @@ class Slides::PhlexSlidesController < SlidesController
           title: "Set defaults and require values with method signatures"
         ){
           Markdown { "Ruby method signatures enforce required data and sets defaults" }
-          HStack {
-            Code(:ruby) {
+          TwoUp {
+            Code(:ruby, title: "Set default values in arguments"){
               <<~RUBY
                 class TailwindNav < Phlex::HTML
                   def initialize(title: "Main Menu")
@@ -155,7 +158,7 @@ class Slides::PhlexSlidesController < SlidesController
               RUBY
             }
 
-            Code(:ruby){
+            Code(:ruby, title: "Override default method value"){
               <<~RUBY
                 render TailwindNav.new title: "Site Menu" do |it|
                   it.item("/") { "Home" }
@@ -206,7 +209,7 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "Using Phlex with Rails",
-          subtitle: "Incrementally go from zero to hero 🦸"
+          subtitle: "Incrementally go from zero 🫣 to hero 🦸"
         ),
 
         ContentSlide(
@@ -232,31 +235,61 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Rendering Phlex components from Erb"
+          title: "Render Phlex components from existing templates"
         ){
-          Prose { "Phlex components can be rendered from existing Erb views."}
+          Prose { "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."}
           Code(:erb) {
-            <<~ERB
+            <<~HTML
               <%= render TailwindNav.new title: "Site Menu" do |it| %>
                 <% it.item("/") { "Home" } %>
                 <% it.item("/about") { "About" } %>
                 <% it.item("/contact") { "Contact" } %>
               <% end %>
-            ERB
+            HTML
+          }
+        },
+
+        ContentSlide(
+          title: "Build pages with Phlex"
+        ){
+          Prose { "Here's what a page might look like in Phlex" }
+          Code(:ruby) {
+            <<~RUBY
+              class Views::Profile < ApplicationComponent
+                def initialize(user:)
+                  @user = user
+                end
+
+                def template
+                  div class: "grid grid-cols-2 gap-8" do
+                    render TailwindNav.new do |it|
+                      it.item("/password") { "Change password" }
+                      it.item("/logout") { "Log out" }
+                      it.item("/settings") { "Settings" }
+                    end
+
+                    main do
+                      h1 { "Hi #\{@user.name} "}
+                    end
+                  end
+                end
+              end
+            RUBY
           }
         },
 
         ContentSlide(
           title: "Render Phlex pages from controllers"
         ){
-          Prose { "Start rendering entire pages using Phlex from the controller."}
-          Code(:ruby) {
+          Code(:ruby, title: "Render an instance of a Phlex view from a controller action.") {
             <<~RUBY
               class ProfileController < ApplicationController
                 before_action { @user = User.find(params.fetch(:id)) }
 
                 def show
-                  render Views::Profile.new(user: @user)
+                  respond_to do |format|
+                    format.html { render Views::Profile.new(user: @user) }
+                  end
                 end
               end
             RUBY
@@ -275,11 +308,21 @@ class Slides::PhlexSlidesController < SlidesController
                 include Superview::Actions
 
                 # Rails will map the `show` action to the `Show` class.
-                class Show
-                  attr_writer :current_user
+                class Show < ApplicationComponent
+                  attr_writer :user
 
                   def template
-                    h1 { "Hi \#{@current_user.name}" }
+                    div class: "grid grid-cols-2 gap-8" do
+                      render TailwindNav.new do |it|
+                        it.item("/password") { "Change password" }
+                        it.item("/logout") { "Log out" }
+                        it.item("/settings") { "Settings" }
+                      end
+
+                      main do
+                        h1 { "Hi #\{@user.name} "}
+                      end
+                    end
                   end
                 end
               end
@@ -288,19 +331,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         TitleSlide(
-          title: "Phlex makes possible an ambitious future of libraries that plug into each other..."
+          title: "The amibitious possibilities of Phlex in Rails",
+          subtitle: "A few projects that get me excited about the future of Phlex"
         ),
-
-        ContentSlide(
-          title: "Superview"
-        ){
-          Markdown {
-            <<~MARKDOWN
-            * Embed Phlex views right into controllers.
-            * Sinatra like ergonomics for Rails.
-            MARKDOWN
-          }
-        },
 
         ContentSlide(
           title: "Superform"

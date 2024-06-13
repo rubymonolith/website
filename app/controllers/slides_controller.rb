@@ -1,28 +1,33 @@
 class SlidesController < ApplicationController
   module Layouts
     class Slide < ApplicationView
-      def initialize(title: nil, class: nil, &block)
+      def initialize(title: nil, class: "bg-neutral-50", &block)
         @title = title
         @class = kwarg(class:)
       end
 
       def around_template(&)
-        div class: "text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full" do
-          VStack(class: tokens("p-4 md:p-12 h-full", @class), &)
+        div class: tokens("text-sm sm:text-md md:text-lg lg:text-2xl xl:text-3xl h-full p-4 md:p-12", @class) do
+          div class: "lg:aspect-[16/9] w-full" do
+            VStack(class: "p-4 md:p-12 h-full", &)
+          end
         end
       end
 
-      def Code(language, class: nil, url: nil, file: nil, **, &source)
-        pre(class: tokens("text-[0.7rem] md:text-md lg:text-lg xl:text-xl bg-gray-800 text-white rounded-2xl p-2 md:p-4 overflow-auto", class:)) {
-          source_code = if url
-            HTTP.get(url).body.to_s
-          elsif file
-            File.read(file)
-          else
-            source.call
-          end
-          render CodeComponent.new(language: language, source: source_code)
-        }
+      def Code(language, title: nil, class: nil, url: nil, file: nil, **, &source)
+        figure(class: "flex flex-col gap-2") do
+          figcaption(class: "font-semibold text-sm sm:text-md lg:text-lg xl:text-xl") { title } if title
+          pre(class: tokens("text-[0.7rem] leading-tight sm:text-sm md:text-lg lg:text-xl xl:text-2xl bg-gray-800 text-white rounded-lg p-2 md:p-4 overflow-auto", class:)) {
+            source_code = if url
+              HTTP.get(url).body.to_s
+            elsif file
+              File.read(file)
+            else
+              source.call
+            end
+            render CodeComponent.new(language: language, source: source_code)
+          }
+        end
       end
 
       def HStack(class: nil, &)
@@ -33,12 +38,16 @@ class SlidesController < ApplicationController
         div(class: tokens("flex flex-col gap-2 md:gap-8", class:), &)
       end
 
+      def TwoUp(&)
+        div(class: "grid grid-cols-1 md:grid-cols-2 gap-8", &)
+      end
+
       def Title(class: nil, **, &)
         h1(class: tokens("font-bold text-md xs:text-lg sm:text-3xl md:text-5xl lg:text-6xl leading-tight sm:leading-normal", class:), **, &)
       end
 
-      def Subtitle(&)
-        h1(class: "text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-6xl", &)
+      def Subtitle(class: nil, &)
+        h1(class: tokens("text-md sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl", class:), &)
       end
 
       def Prose(class: "prose prose-sm sm:prose-md md:prose-xl lg:prose-2xl min-w-fit", &source)
@@ -123,26 +132,14 @@ class SlidesController < ApplicationController
     end
 
     def view_template
-      ol(class: "grid grid-cols-1 gap-4 p-4 md:gap-12 md:p-12 max-w-screen-xl mx-auto") {
+      ol(class: "divide-y divide-neutral-500 divide-y-2 snap-y snap-mandatory") {
         @presentation.slides.each.with_index do |slide, index|
-          li {
+          li(class: "snap-start overflow-auto") {
             a(href: url_for(action: :show, id: index)) {
-              render SlideView.new(slide:)
+              render slide
             }
           }
         end
-      }
-    end
-  end
-
-  class SlideView < ApplicationView
-    def initialize(slide:)
-      @slide = slide
-    end
-
-    def view_template
-      div(class: "w-full aspect-[16/9] border border-gray-300 rounded-lg overflow-hidden shadow-xl"){
-        render @slide
       }
     end
   end
@@ -170,18 +167,16 @@ class SlidesController < ApplicationController
     end
 
     def view_template
-      div class: "w-screen h-screen bg-black flex flex-col justify-center items-center" do
-        div(
-          class: "w-full aspect-[16/9] bg-neutral-50",
-          data: {
-            controller: "slide",
-            slide_next_value: slide_url(+1),
-            slide_previous_value: slide_url(-1),
-          },
-        ){
-          render @slide || BlankSlide.new
-        }
-      end
+      div(
+        class: "bg-black w-screen h-screen",
+        data: {
+          controller: "slide",
+          slide_next_value: slide_url(+1),
+          slide_previous_value: slide_url(-1),
+        },
+      ){
+        render @slide || BlankSlide.new
+      }
     end
   end
 
