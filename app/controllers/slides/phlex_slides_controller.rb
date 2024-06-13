@@ -30,8 +30,8 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "⚠️ WARNING ⚠️",
-          subtitle: %{I did a stupid thing and created this presentation software while creating this presentation.},
-          class: "bg-red-900 text-white lg:animate-pulse lg:animate-bounce"
+          subtitle: %{I did a stupid thing and created this presentation software while creating this presentation. 🤣},
+          class: "bg-red-900 text-white"
         ),
 
         TitleSlide(
@@ -365,7 +365,7 @@ class Slides::PhlexSlidesController < SlidesController
         ),
 
         TitleSlide(
-          title: "Superview",
+          title: "Superview 🦹‍♀️",
           subtitle: "Build Rails applications, from the ground up, using Phlex components",
           class: "bg-gradient-to-tl from-slate-500 to-slate-800 text-white"
         ),
