@@ -44,6 +44,10 @@ class Slides::PhlexSlidesController < SlidesController
             span(class: "font-light italic") { "/fleks/" }
           }
           Subtitle(class: "font-serif") { "Phlex is a Ruby gem for building fast object-oriented HTML and SVG components. Views are described using Ruby constructs: methods, keyword arguments and blocks, which directly correspond to the output." }
+          Subtitle(class: "font-serif") {
+            plain "Created by "
+            a(href: "https://www.namingthings.org", class: "underline"){ "Joel Drapper" }
+            plain "." }
         },
 
         ContentSlide(
@@ -237,11 +241,11 @@ class Slides::PhlexSlidesController < SlidesController
         TitleSlide(
           title: "Use Phlex with Rails",
           subtitle: "Incrementally go from zero 🫣 to hero 🦸",
-          class: "bg-gradient-to-tl from-red-500 to-orange-500 text-white"
+          class: "bg-gradient-to-tl from-red-600 to-orange-600 text-white"
         ),
 
         ContentSlide(
-          title: "Install Phlex Rails integration"
+          title: "Install Phlex Rails integration 🔧"
         ){
           Prose { "Install the phlex-rails gem:"}
           Code(:sh) {
@@ -265,7 +269,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Render Phlex components from existing templates"
+          title: "Render Phlex components from existing templates 😑"
         ){
           Prose { "Phlex components can be rendered from existing Erb, Slim, Haml, or Liquid views."}
           Code(:erb, title: "Erb") {
@@ -290,7 +294,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Build pages with Phlex"
+          title: "Build pages with Phlex 😐"
         ){
           Prose { "Here's what a page might look like in Phlex" }
           Code(:ruby) {
@@ -320,7 +324,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Page Layouts are superclasses"
+          title: "Page Layouts are superclasses 🙂"
         ){
           Prose { "Pages inherit from a superclass that implements an `around_template`, wrapping the contents of `template` in the subclass." }
           Code(:ruby) {
@@ -341,7 +345,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Render Phlex pages from controllers"
+          title: "Render Phlex pages from controllers 😀"
         ){
           Code(:ruby, title: "Render an instance of a Phlex view from a controller action.") {
             <<~RUBY
@@ -360,7 +364,7 @@ class Slides::PhlexSlidesController < SlidesController
 
         TitleSlide(
           title: "The amibitious possibilities of Phlex",
-          subtitle: "A few projects that get me excited about the future of Phlex",
+          subtitle: "A few projects that get me excited about the future of Phlex 🚀",
           class: "bg-gradient-to-tl from-green-500 to-blue-500 text-white"
         ),
 
