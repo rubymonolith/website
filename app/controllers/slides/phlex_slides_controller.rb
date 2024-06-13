@@ -135,7 +135,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Set defaults and require values with method signatures"
+          title: "Set default & require values with method signatures"
         ){
           Markdown { "Ruby method signatures enforce required data and sets defaults" }
           TwoUp {
@@ -406,15 +406,15 @@ class Slides::PhlexSlidesController < SlidesController
           Code(:ruby) {
             <<~RUBY
               class ProfileController < ApplicationController
-                before_action do
-                  @user = User.find(params.fetch(:id))
-                  @form = Form.new(@user)
-                end
-
                 class Form < ApplicationForm
                   render field(:name).input
                   render field(:email).input(type: :email)
                   button { "Save" }
+                end
+
+                before_action do
+                  @user = User.find(params.fetch(:id))
+                  @form = Form.new(@user)
                 end
 
                 def update
