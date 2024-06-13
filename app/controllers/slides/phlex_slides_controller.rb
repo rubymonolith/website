@@ -23,7 +23,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         TitleSlide(
-          title: "Phlex"
+          title: "Phlex 💪"
         ){
           Title(class: "font-serif") {
             span { @title }
@@ -34,9 +34,9 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "What does Phlex look like? 👀"
+          title: "This is a Phlex component 👀"
         ){
-          p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this menu implemented in Phlex:" }
+          p { "Phlex is a plain 'ol Ruby object that can render HTML. Check out this navigation menu implemented in Phlex." }
           TwoUp {
             VStack {
               Code(:ruby, title: "Here's Phlex"){
@@ -75,7 +75,7 @@ class Slides::PhlexSlidesController < SlidesController
         ContentSlide(
           title: "Slots are blocks 🧱"
         ){
-          Markdown { "The `item` method accepts a block, which is rendered in the navigation `li` component" }
+          Markdown { "The `item` method accepts a block, which is rendered in the navigation `li > a` tag." }
           TwoUp {
             Code(:ruby, title: "Navigation component implementation") {
               <<~RUBY
@@ -106,7 +106,7 @@ class Slides::PhlexSlidesController < SlidesController
         ContentSlide(
           title: "Extend components with inheritence"
         ){
-          Markdown { "Useful for shipping a component library or prototyping new features" }
+          Markdown { "Useful for shipping component libraries, prototyping new features, or for page layouts." }
           TwoUp {
             Code(:ruby, title: "Tailwind component") {
               <<~RUBY
@@ -171,7 +171,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Beautiful code with Phlex Kits 🤩"
+          title: "Write beautiful code with Phlex Kits 🤩"
         ){
           p { "Class functions automatically initialize and render Phlex components" }
           Code(:ruby) {
@@ -195,7 +195,7 @@ class Slides::PhlexSlidesController < SlidesController
         },
 
         ContentSlide(
-          title: "Do anything with Phlex that you can with Ruby"
+          title: "Do in Phlex what you do with Ruby"
         ){
           Markdown {
             <<~MARKDOWN
@@ -203,17 +203,18 @@ class Slides::PhlexSlidesController < SlidesController
             * Compose views by rendering Phlex views within views.
             * Enforce data types with Ruby's type checking.
             * Distribute UI libraries via RubyGems.
+            * Less "stuff" than Erb and ViewComponents.
             MARKDOWN
           }
         },
 
         TitleSlide(
-          title: "Using Phlex with Rails",
+          title: "Use Phlex with Rails",
           subtitle: "Incrementally go from zero 🫣 to hero 🦸"
         ),
 
         ContentSlide(
-          title: "Install the Phlex Rails integration"
+          title: "Install Phlex Rails integration"
         ){
           Prose { "Install the phlex-rails gem:"}
           Code(:sh) {
@@ -296,57 +297,169 @@ class Slides::PhlexSlidesController < SlidesController
           }
         },
 
+        TitleSlide(
+          title: "The amibitious possibilities of Phlex",
+          subtitle: "A few projects that get me excited about the future of Phlex"
+        ),
+
+        TitleSlide(
+          title: "Superview",
+          subtitle: "Build Rails applications, from the ground up, using Phlex components",
+          class: "bg-orange-700 text-white"
+        ),
+
+        ContentSlide(title: "Inline Views"){
+          p { "Start building out views in the controller, kinda like building apps in Sinatra" }
+          Code(:ruby,
+            class: "overflow-scroll",
+            url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/blogs_controller.rb"
+          )
+        },
+
+        ContentSlide(title: "Extracted Views"){
+          Markdown { "Move views to `./app/views/*` folder to organize or share with other controllers." }
+          TwoUp {
+            Code(:ruby,
+              class: "overflow-scroll",
+              url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/posts_controller.rb"
+            )
+            Code(:ruby,
+              class: "overflow-scroll",
+              url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/views/posts/index.rb"
+            )
+          }
+        },
+
+        TitleSlide(
+          title: "Superform 🦸",
+          subtitle: "The best way to build forms in Rails applications",
+          class: "bg-green-700 text-white"
+        ),
+
         ContentSlide(
-          title: "Go all-in on Phlex with Superview"
+          title: "This is a simple blog post Superform"
         ){
-          Markdown { "Install the `superview` gem and embed view classes right in the controller."}
+          Code(:ruby, url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/views/posts/form.rb")
+        },
+
+        ContentSlide(
+          title: "Here's a complex sign-up Superform"
+        ){
           Code(:ruby) {
             <<~RUBY
-              class ProfileController < ApplicationController
-                before_action { @user = User.find(params.fetch(:id)) }
+              # Everything below is intentionally verbose!
+              class SignupForm < ApplicationForm
+                def template
+                  # The most basic type of input, which will be autofocused.
+                  render field(:name).input.focus
 
-                include Superview::Actions
+                  # Input field with a lot more options on it.
+                  render field(:email).input(type: :email, placeholder: "We will sell this to third parties", required: true)
 
-                # Rails will map the `show` action to the `Show` class.
-                class Show < ApplicationComponent
-                  attr_writer :user
+                  # You can put fields in a block if that's your thing.
+                  render field(:reason) do |f|
+                    div do
+                      f.label { "Why should we care about you?" }
+                      f.textarea(row: 3, col: 80)
+                    end
+                  end
 
-                  def template
-                    div class: "grid grid-cols-2 gap-8" do
-                      render TailwindNav.new do |it|
-                        it.item("/password") { "Change password" }
-                        it.item("/logout") { "Log out" }
-                        it.item("/settings") { "Settings" }
-                      end
+                  # Let's get crazy with Selects. They can accept values as simple as 2 element arrays.
+                  div do
+                    render field(:contact).label { "Would you like us to spam you to death?" }
+                    render field(:contact).select(
+                      [true, "Yes"],  # <option value="true">Yes</option>
+                      [false, "No"],  # <option value="false">No</option>
+                      "Hell no",      # <option value="Hell no">Hell no</option>
+                      nil             # <option></option>
+                    )
+                  end
 
-                      main do
-                        h1 { "Hi #\{@user.name} "}
+                  div do
+                    render field(:source).label { "How did you hear about us?" }
+                    render field(:source).select do |s|
+                      # Pretend WebSources is an ActiveRecord scope with a "Social" category that has "Facebook, X, etc"
+                      # and a "Search" category with "AltaVista, Yahoo, etc."
+                      WebSources.select(:id, :name).group_by(:category) do |category, sources|
+                        s.optgroup(label: category) do
+                          s.options(sources)
+                        end
                       end
                     end
                   end
+
+                  div do
+                    render field(:agreement).label { "Check this box if you agree to give us your first born child" }
+                    render field(:agreement).checkbox(checked: true)
+                  end
+
+                  render button { "Submit" }
                 end
               end
             RUBY
           }
         },
 
-        TitleSlide(
-          title: "The amibitious possibilities of Phlex in Rails",
-          subtitle: "A few projects that get me excited about the future of Phlex"
-        ),
-
         ContentSlide(
-          title: "Superform"
+          title: "Superform can permit its own parameters 🥳"
         ){
-          Markdown {
-            <<~MARKDOWN
-            * Build forms with Phlex components.
-            * The best form helper that you can use with Rails.
-            * You can actually customize it.
-            * You don't need strong parameters 🤩.
-            MARKDOWN
+          Code(:ruby) {
+            <<~RUBY
+              class ProfileController < ApplicationController
+                before_action do
+                  @user = User.find(params.fetch(:id))
+                  @form = Form.new(@user)
+                end
+
+                class Form < ApplicationForm
+                  render field(:name).input
+                  render field(:email).input(type: :email)
+                  button { "Save" }
+                end
+
+                def update
+                  # Assigns the `:name` and `:email` params to the form.
+                  @form.assign params.require(:user)
+                  @user.save ? redirect_to(@user) : render(@form)
+                end
+              end
+            RUBY
           }
         },
+
+        # ContentSlide(
+        #   title: "Embed Phlex views in controllers with Superview"
+        # ){
+        #   Markdown { "Install the `superview` gem and embed view classes right in the controller."}
+        #   Code(:ruby) {
+        #     <<~RUBY
+        #       class ProfileController < ApplicationController
+        #         before_action { @user = User.find(params.fetch(:id)) }
+
+        #         include Superview::Actions
+
+        #         # Rails will map the `show` action to the `Show` class.
+        #         class Show < ApplicationComponent
+        #           attr_writer :user
+
+        #           def template
+        #             div class: "grid grid-cols-2 gap-8" do
+        #               render TailwindNav.new do |it|
+        #                 it.item("/password") { "Change password" }
+        #                 it.item("/logout") { "Log out" }
+        #                 it.item("/settings") { "Settings" }
+        #               end
+
+        #               main do
+        #                 h1 { "Hi #\{@user.name} "}
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     RUBY
+        #   }
+        # },
 
         ContentSlide(
           title: "Phlex UI & more..."
@@ -381,22 +494,6 @@ class Slides::PhlexSlidesController < SlidesController
           Code(:ruby,
             class: "overflow-scroll",
             file: __FILE__
-          )
-        },
-
-        ContentSlide(title: "Ruby Monolith Blog Demo: Inline Views"){
-          p { "Start building out views in the controller" }
-          Code(:ruby,
-            class: "overflow-scroll",
-            url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/blogs_controller.rb"
-          )
-        },
-
-        ContentSlide(title: "Ruby Monolith Blog Demo: Extracted Views"){
-          p { "Then move them into the ./app/views folder" }
-          Code(:ruby,
-            class: "overflow-scroll",
-            url: "https://raw.githubusercontent.com/rubymonolith/demo/main/app/controllers/posts_controller.rb"
           )
         },
 
