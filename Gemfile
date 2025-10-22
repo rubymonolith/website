@@ -76,7 +76,7 @@ end
 
 gem "sitepress-rails", "~> 4.0"
 
-gem "markdown-rails", "= 2.0.0.alpha8"
+gem "markdown-rails", github: "sitepress/markdown-rails", branch: "view-context"
 
 gem "rubymonolith", "~> 0.1.5"
 
@@ -84,7 +84,7 @@ gem "slim-rails", "~> 3.5"
 
 gem "rouge", "~> 4.1"
 
-gem "dockerfile-rails", "~> 1.5"
+gem "dockerfile-rails", ">= 1.7"
 
 gem "uri-builder", "~> 0.1.5"
 

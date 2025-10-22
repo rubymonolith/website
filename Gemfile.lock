@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: f380d1e78e7e906b39c6969c6641ae49fc39065e
+  revision: 6ec4c85507d10650cb80796deda7d79a17677c29
   branch: main
   specs:
     actioncable (8.2.0.alpha)
@@ -98,6 +98,17 @@ GIT
       thor (~> 1.0, >= 1.2.2)
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
+
+GIT
+  remote: https://github.com/sitepress/markdown-rails.git
+  revision: 1181cdc2d17a1f4426399090cde11b8223c65941
+  branch: view-context
+  specs:
+    markdown-rails (2.1.0)
+      actionview (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
+      redcarpet (>= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -247,11 +258,8 @@ GEM
       net-smtp
     mapping (1.1.3)
     marcel (1.1.0)
-    markdown-rails (2.0.0.alpha8)
-      rails (>= 6.0.0)
-      redcarpet (>= 3.0.0)
     matrix (0.4.3)
-    memory (0.7.0)
+    memory (0.7.1)
       bake (~> 0.15)
       console
       msgpack
@@ -474,12 +482,12 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-  dockerfile-rails (~> 1.5)
+  dockerfile-rails (>= 1.7)
   falcon
   http (~> 5.3)
   importmap-rails
   jbuilder
-  markdown-rails (= 2.0.0.alpha8)
+  markdown-rails!
   phlex-rails (~> 1.2)
   propshaft
   rails!
