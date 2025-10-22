@@ -1,0 +1,9 @@
+{
+  "name": "rubymonolith-server",
+  "private": true,
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/container-queries": "^0.1.1"
+  }
+}

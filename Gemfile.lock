@@ -476,7 +476,7 @@ DEPENDENCIES
   debug
   dockerfile-rails (~> 1.5)
   falcon
-  http (~> 5.1)
+  http (~> 5.3)
   importmap-rails
   jbuilder
   markdown-rails (= 2.0.0.alpha8)
