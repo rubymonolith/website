@@ -4,6 +4,7 @@
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/container-queries";
+@plugin "daisyui";
 
 /* Configure Tailwind to scan these paths for classes */
 @source "../../../app/helpers";
