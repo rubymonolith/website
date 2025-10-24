@@ -56,7 +56,7 @@ class PostsController < ApplicationController
   # Forms are concise, expressive, and highly customizable
   # Phlex components.
   class Form < ApplicationForm
-    def template
+    def view_template
       labeled field(:title).input.focus
       labeled field(:publish_at).input
       labeled field(:content).textarea(rows: 6)
@@ -71,7 +71,7 @@ class PostsController < ApplicationController
 
     def title = "#{@current_user.name}'s Posts"
 
-    def template
+    def view_template
       # Tables can be abstracted away into components.
       render TableComponent.new(items: @posts) do |table|
         table.column("Title") { show(_1, :title) }
@@ -94,7 +94,7 @@ class PostsController < ApplicationController
     def title = @post.title
     def subtitle = show(@post.blog, :title)
 
-    def template
+    def view_template
       table do
         tbody do
           tr do
@@ -127,7 +127,7 @@ class PostsController < ApplicationController
     def title = @post.title
     def subtitle = show(@post.blog, :title)
 
-    def template
+    def view_template
       render Form.new(@post)
     end
   end
@@ -149,7 +149,7 @@ Superforms makes that possible so you can create concise forms like this:
 
 ```ruby
 class Form < TailwindForm
-  def template
+  def view_template
     group "Post" do
       labeled field(:title).input.focus
       labeled field(:content).textarea(rows: 6)

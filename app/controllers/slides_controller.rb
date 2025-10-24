@@ -90,7 +90,7 @@ class SlidesController < ApplicationController
         super(class: tokens("xl:text-5xl", class:), &)
       end
 
-      def template
+      def view_template
         title_template
         yield if block_given?
       end
@@ -114,7 +114,7 @@ class SlidesController < ApplicationController
     end
 
     class CodeSlide < Slide
-      def template
+      def view_template
       end
     end
   end
@@ -163,7 +163,7 @@ class SlidesController < ApplicationController
 
   class SlidePlayerView < ApplicationView
     class BlankSlide < Layouts::Slide
-      def template
+      def view_template
         VStack {
           h1 { "End of presentation" }
           a(href: url_for(action: :index), class: "underline") { "Go back to Slides" }

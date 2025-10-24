@@ -48,7 +48,7 @@ class CodeComponent < ApplicationComponent
     @language = language
   end
 
-  def template
-    code { unsafe_raw Tailwind.format_code(language: @language, source: @source) }
+  def view_template
+    code { safe Tailwind.format_code(language: @language, source: @source) }
   end
 end

@@ -42,7 +42,7 @@ SuperForms are built entirely out of Phlex components. The method names correspe
 ```ruby
 class ApplicationForm < SuperForm::Base
   class MyInputComponent < ApplicationComponent
-    def template(&)
+    def view_template(&)
       div class: "form-field" do
         input(**attributes)
         if field.errors?
@@ -91,7 +91,7 @@ The best part? If you have forms with a completely different look and feel, you 
 ```ruby
 class AdminForm < ApplicationForm
   class AdminInput < ApplicationComponent
-    def template(&)
+    def view_template(&)
       input(**attributes)
       small { admin_tool_tip_for field.key }
     end

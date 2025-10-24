@@ -303,10 +303,12 @@ GEM
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
     openssl (3.3.1)
-    phlex (1.11.0)
-    phlex-rails (1.2.2)
-      phlex (>= 1.10, < 2)
-      railties (>= 6.1, < 9)
+    phlex (2.3.1)
+      zeitwerk (~> 2.7)
+    phlex-rails (2.3.1)
+      phlex (~> 2.3.0)
+      railties (>= 7.1, < 9)
+      zeitwerk (~> 2.7)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -375,6 +377,7 @@ GEM
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
     rubymonolith (0.1.5)
+      phlex-rails (~> 2.0)
       thor (~> 1.0)
     rubyzip (3.2.0)
     samovar (2.4.1)
@@ -488,7 +491,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   markdown-rails!
-  phlex-rails (~> 1.2)
+  phlex-rails (~> 2.0)
   propshaft
   rails!
   redis (~> 4.0)

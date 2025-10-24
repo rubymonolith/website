@@ -59,7 +59,7 @@ class Slides::PhlexSlidesController < SlidesController
               Code(:ruby, title: "Here's Phlex"){
                 <<~RUBY
                   class Nav < Phlex::HTML
-                    def template
+                    def view_template
                       nav(class: "main-nav") {
                         ul {
                           li { a(href: "/") { "Home" } }
@@ -97,7 +97,7 @@ class Slides::PhlexSlidesController < SlidesController
             Code(:ruby, title: "Navigation component implementation") {
               <<~RUBY
                 class Nav < Phlex::HTML
-                  def template(&content)
+                  def view_template(&content)
                     nav(class: "main-nav") { ul(&content) }
                   end
 
@@ -128,7 +128,7 @@ class Slides::PhlexSlidesController < SlidesController
             Code(:ruby, title: "Tailwind component") {
               <<~RUBY
                 class TailwindNav < Nav
-                  def template(&content)
+                  def view_template(&content)
                     nav(class: "flex flex-row gap-4", &content)
                   end
 
@@ -175,7 +175,7 @@ class Slides::PhlexSlidesController < SlidesController
                     @title = title
                   end
 
-                  def template(&content)
+                  def view_template(&content)
                     h2(class: "font-bold") { @title }
                     nav(class: "flex flex-row gap-4", &content)
                   end
@@ -208,7 +208,7 @@ class Slides::PhlexSlidesController < SlidesController
               class Page < ApplicationComponent
                 include Phlex::Kit
 
-                def template
+                def view_template
                   Sidebar {
                     Header { "My Site" }
                     p(class: "text-lg font-bold") { "Let's mix components with some HTML tags." }
@@ -305,7 +305,7 @@ class Slides::PhlexSlidesController < SlidesController
                   @user = user
                 end
 
-                def template
+                def view_template
                   div class: "grid grid-cols-2 gap-8" do
                     render TailwindNav.new do |it|
                       it.item("/password") { "Change password" }
@@ -420,7 +420,7 @@ class Slides::PhlexSlidesController < SlidesController
             <<~RUBY
               # Everything below is intentionally verbose!
               class SignupForm < ApplicationForm
-                def template
+                def view_template
                   # The most basic type of input, which will be autofocused.
                   render field(:name).input.focus
 

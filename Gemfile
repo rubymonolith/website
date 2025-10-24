@@ -90,6 +90,6 @@ gem "uri-builder", "~> 0.1.5"
 
 gem "http", "~> 5.3"
 
-gem "phlex-rails", "~> 1.2"
+gem "phlex-rails", "~> 2.0"
 
 gem "rspec-rails", "~> 6.1"
